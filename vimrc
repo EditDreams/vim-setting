@@ -113,11 +113,11 @@ func SetComment_sh()
 	call setline(10,"")
 endfunc
 func SetComment_Makefile()
-	call setline(1,"OBJS  := ")
+	call setline(1,"OBJS := ")
 	call setline(2,"TARGET = ")
 	call setline(3,"CC  = ")
-	call setline(4,"LIB =")
-	call setline(5,"")
+	call setline(4,"LIB = ")
+	call setline(5,"CFLAG = ")
 	call setline(6,"")
 	call setline(7,".PHONY:clean")
 	call setline(8,"clean:")
@@ -269,6 +269,8 @@ set report=0
 set fillchars=vert:\ ,stl:\ ,stlnc:\
 " 高亮显示匹配的括号
 set showmatch
+"高亮显示括号的颜色
+hi MatchParen ctermbg=Yellow guibg=lightblue
 " 匹配括号高亮的时间（单位是十分之一秒）
 set matchtime=1
 " 光标移动到buffer的顶部和底部时保持3行距离
