@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<!--按下后-->
+	<item android:state_pressed="true">
+		<shape>
+			<gradient
+				android:startColor="#cccccc"
+				android:endColor="#cccccc"/>
+			<corners
+				android:topLeftRadius="30dp"
+				android:topRightRadius="30dp"
+				android:bottomLeftRadius="30dp"
+				android:bottomRightRadius="30dp"/>
+		</shape>
+	</item>
+	<item>
+		<shape>
+			<gradient
+				android:startColor="#eeeeee"
+				android:endColor="#eeeeee"/>
+			<corners
+				android:topLeftRadius="10dp"
+				android:topRightRadius="10dp"
+				android:bottomLeftRadius="10dp"
+				android:bottomRightRadius="10dp"/>
+		</shape>
+	</item>
+
+</selector>
