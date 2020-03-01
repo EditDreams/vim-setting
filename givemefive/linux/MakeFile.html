@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MakeFile</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<h1>掌握MakeFile知识</h1>
+<blockquote>
+<p>- 
+什么是makefile？<br>
+工程管理文件                      <br />
+用到什么命令去记什么命令。                           <br />
+多个.o文件链接成一个可执行文件,生成最终的elf文件</p>
+</blockquote>
+<h3>gcc 参数：</h3>
+<blockquote>
+<p>gcc -c 只编译，不链接，生成.o文件</p>
+</blockquote>
+<pre><code>mabu@mabu:~/work/gcc_learn$ gcc -c hello.c hello1.c
+mabu@mabu:~/work/gcc_learn$ ls
+hello1.c  hello1.o  hello.c  hello.o
+mabu@mabu:~/work/gcc_learn$ 
+</code></pre>
+
+<p>gcc -D 允许从编译程序命令行定义宏符号                          <br />
+gcc -L 指定链接库的路径（L第三方库）                                <br />
+gcc -I 指定查找include文件的其他位置</p>
+<ul>
+<li>gcc编译原理：</li>
+</ul>
+<blockquote>
+<p><strong>预处理：</strong>将头文件中的内容全部复制过来 删除注释 宏替换 条件编译 <br />
+<strong>编译：</strong>将c语言转换成汇编语言 <br />
+<strong>汇编：</strong>将汇编语言转换成二进制码 <br />
+<strong>链接：</strong>将程序中需要使用到的所有参数添加到一起，生成一个可执行文件                                 
+</p>
+</blockquote>
+<h3>Makefile文件实现：</h3>
+<p>依赖dep通过cmd生成target   <br />
+target:dep                                      <br />
+    cmd<br />
+.o文件：二进制机器码 </p>
+<pre><code>hello.o:hello.s
+gcc -C -o hello.o hello.s     #汇编  
+
+hello.s:hello.i
+gcc -S -o hello.s hello.i     #编译 
+
+hello.i:hello.c
+gcc -E -o hello.i hello.c     #预处理
+
+hello:hello.o  
+gcc -o hello hello.o          #链接   
+</code></pre>
+
+<p>GCC参数</p>
+<pre><code>gcc -D   #允许从编译程序命令行定义宏符号
+gcc -DDEBUG=0 -o test test.c    
+
+cpp文件:
+#include&lt;stdio.h&gt;
+
+int main()
+{
+#ifdef DEBUG
+        puts(&quot;ERROR:You show the error.That's amazing!&quot;);
+#endif
+        puts(&quot;don't worry.code is running on road...&quot;);
+    return 0;
+}
+</code></pre>
+
+<p>Makefile中变量的使用                          <br />
+一、显式规则中的变量                        <br />
+二、隐式规则                           </p>
+<p>% 任何一个</p>
+<pre><code>%.o:%.c
+    gcc -o $@ $^                                                      
+</code></pre>
+
+<ul>
+<li>
+<p>所有  <br />
+<code>*.o</code> <br />
+？一个  
+</p>
+<p>func1.c func2.c<br />
+func?.c   
+</p>
+</li>
+</ul>
+<p><strong>函数</strong>  </p>
+<pre><code>SRC=$(wildcard *.c)                 #获取当前目录下的所有.c文件
+OBJ=$(patsubset %.c,%.o,$(SRC))     #从SRC中取出所有.c全部替换成.o
+</code></pre>
+
+<p>make有几个常用的特殊通配符： </p>
+<pre><code>$@： 所有目标的文件
+$^： 所有依赖文件   
+$&lt;： 第一个依赖文件   
+$?： 所有更新过的依赖文件  
+问题：makefile包含函数怎么写？  
+</code></pre>
+
+<p><strong>.PHONY</strong> <br />
+是一个伪目标，可以有效防止在Makefile文件中定义的可执行命令的目标规则和工作目录下的实际文件出现名称冲突，并提高了执行Makefile的性能，因为将clean定义成伪目标后，make的执行程序不会试图寻找clean的隐含规则。<br />
+<strong>总结：</strong>PHONY伪目标可以解决源文件不是最终目标直接依赖（实际上可以认为是间接依赖）带来的不能自动检查更新规则。</p>
+<pre><code>.PHONY:clean   
+clean:   
+rm *.o temp  
+</code></pre>
+
+<p>当make的目标为all时，-C $(KDIR) 指明跳转到源码目录下读取那里的Makefile</p>
+<pre><code>OBJS = ./add/add.o ./sub/sub.o ./test/test.o  
+program:  $(OBJS)  
+    gcc ./test/test.o ./add/add.o ./sub/sub.o -o program 
+$(OBJS):
+    make -C $(dir $@)  
+.PHONY: clean
+clean:
+    make -C ./add  clean
+    make -C ./sub  clean
+    make -C ./test clean
+    rm -f program
+</code></pre>
+
+<p><strong>make</strong><br />
+根据Makefile文件编译源代码、连接、生成目标文件、可执行文件。<br />
+<strong>make clean</strong><br />
+清除上次的make命令所产生的object文件（后缀为“.o”的文件）及可执行文件。<br />
+<strong>make install</strong><br />
+将编译成功的可执行文件安装到系统目录中，一般为/usr/local/bin目录。<br />
+<strong>make dist</strong><br />
+产生发布软件包文件（即distribution package）。这个命令将会将可执行文件及相关文件打包成一个tar.gz压缩的文件用来作为发布软件的软件包。<br />
+它会在当前目录下生成一个名字类似“PACKAGE-VERSION.tar.gz”的文件。PACKAGE和VERSION,是我们在configure.in中定义的AM<em>INIT</em>AUTOMAKE（PACKAGE, VERSION）。<br />
+<strong>make distcheck</strong><br />
+生成发布软件包并对其进行测试检查，以确定发布包的正确性。这个操作将自动把压缩包文件解开，然后执行configure命令，并且执行make,来确认编译不出现错误，最后提示你软件包已经准备好，可以发布了。<br />
+<strong>make distclean</strong><br />
+类似make clean,但同时也将configure生成的文件全部删除掉，包括Makefile文件。  </p>
+<blockquote>
+<ul>
+<li>多目录多文件makefile   <br />
+makefile里面可以包含另外一个makefile   
+</li>
+</ul>
+</blockquote>
+<h1>Makefile多目录编译</h1>
+<p><strong>add目录</strong></p>
+<p>add.c</p>
+<pre><code>#include&quot;../include/heads.h&quot;
+int add(int a,int b)
+{
+    return (a+b);
+}
+</code></pre>
+
+<p>makefile</p>
+<pre><code>add.o:add.c ../include/heads.h
+gcc -c -o $@ $&lt;
+
+.PHONY:clean
+clean:
+    rm -f *.o
+</code></pre>
+
+<p><strong>sub目录</strong></p>
+<pre><code>#include&quot;../include/heads.h&quot;
+int sub(int a,int b)
+{
+    return a-b;
+}
+</code></pre>
+
+<p>makefile</p>
+<pre><code>sub.o:sub.c ../include/heads.h
+gcc -c -o $@ $&lt;
+
+.PHONY:clean
+clean:
+    rm -f *.o
+</code></pre>
+
+<p><strong>test目录</strong></p>
+<pre><code>test.o:test.c ../include/heads.h
+    gcc -c -o $@ $&lt;
+
+.PHONY:clean
+clean:
+    rm -f *.o
+</code></pre>
+
+<p>test.c</p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&quot;../include/heads.h&quot;
+int main()
+{
+    int a=15,b=16;
+    printf(&quot;a+b=%d\n&quot;,add(a,b));
+    return 0;
+}
+</code></pre>
+
+<p><strong>include目录</strong></p>
+<pre><code>#ifndef _HEADS_H_
+#define _HEADS_H_
+
+extern int add(int, int);
+extern int sub(int, int);
+
+#endif
+</code></pre>
+
+<p><strong>makefile</strong></p>
+<pre><code>OBJS=./add/add.o ./sub/sub.o ./test/test.o
+program:$(OBJS)
+    gcc ./test/test.o ./add/add.o ./sub/sub.o -o program
+
+$(OBJS):
+    make -C $(dir $@)
+
+./PHONY:clean
+clean:
+    make -C ./add clean
+    make -C ./sub clean
+    make -C ./test clean
+    rm -f program
+</code></pre>
+
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
