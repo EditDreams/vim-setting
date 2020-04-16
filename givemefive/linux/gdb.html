@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>gdb调试</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<h1>gdb调试</h1>
+<p><font style="color:red">安装gdb插件gef</font>
+wget -q -O- https://github.com/hugsy/gef/raw/master/scripts/gef.sh | sh</p>
+<ul>
+<li>卸载gef
+清空用户目录下文件 .gdbinit的内容
+source /home/mabu/.gdbinit-gef.py</li>
+</ul>
+<p><font style="color:red">使用gdb</font></p>
+<pre><code>gcc -g -o test test.c
+gdb test
+l main    #查看主函数
+b 8       #在第8行设置断点
+r         #执行当前调试程序到断点处
+p/x ch    #十六进制打印
+p/a ch    #打印ASCII码
+p/s str   #查看字符串
+p   &amp;a    #打印变量a的地址
+x/10x $sp #打印栈前10个元素
+</code></pre>
+
+<p><font style="color:red">gdb常见命令介绍</font></p>
+<pre><code>#装入想要调试的可执行文件
+file
+#列出产生执行文件源代码的一部分                           
+list                l
+#执行一行源代码但不进入函数内部(单条语句执行)           
+next                n
+#执行一行源代码而且进入函数内部        
+step                s  
+#执行当前被调试的程序       
+run                 r       
+#继续执行程序  
+continue            c       
+#退出gdb调试   
+quit                          
+#输出当前指定变量的值  
+print               p         
+#在代码里面设置断点
+break               b          
+#查看所有断点信息
+info breakpoints               
+#删除设置的断点 
+delete              d         
+#注释设置的断点
+disable                        
+#监视一个变量的值，一但值有变化，程序停住
+watch               wa        
+#查看有多少进程
+info inferiors              
+#查看当前程序栈的信息
+info frame                  
+#查看当前程序栈的参数
+info args                   
+#查看当前程序栈的局部变量
+info locals                 
+#(不包括浮点寄存器)
+info registers              
+#(包括浮点寄存器)
+info all-registers          
+#查看当前栈帧中的异常处理器
+info catch                  
+info pthread
+#查看当前程序映射的内存块
+vmmap   
+#循环结束                   
+until               u       
+#查看代码里面所有函数
+backtrace               
+#设置参数   
+set args    123.txt 
+#条件打断点      
+b 10 if i==90   
+#退出函数       
+finush
+#往下走                    
+ni
+#查看堆栈                           
+bt  
+#查看线程                       
+info threads
+#线程切换到1             
+thread 1                    
+</code></pre>
+
+<p><font style="color:red">用gdb查看内存</font>  <br />
+格式: x /nfu
+x 是 examine 的缩写; <br />
+n表示要显示的内存单元的个数;<br />
+f表示显示方式, 可取如下值</p>
+<pre><code>x 按十六进制格式显示变量。
+d 按十进制格式显示变量。
+u 按十进制格式显示无符号整型。
+o 按八进制格式显示变量。
+t 按二进制格式显示变量。
+a 按十六进制格式显示变量。
+i 指令地址格式
+c 按字符格式显示变量。
+f 按浮点数格式显示变量。
+</code></pre>
+
+<p>u表示一个地址单元的长度</p>
+<pre><code>b表示单字节，
+h表示双字节，
+w表示四字节，
+g表示八字节
+
+z不省略100前面的0，显示格式：0x000100
+</code></pre>
+
+<p>寄存器</p>
+<pre><code>rdi     第一个参数
+rsi
+rdx     
+rcx
+r8
+r9
+rsp     放的是栈顶，可以看到栈的地址
+rbp     栈底
+</code></pre>
+
+<p>程序崩溃 core</p>
+<pre><code>gdb myfile core
+</code></pre>
+
+<p>查看数组</p>
+<pre><code>p *arr@10       查看数组中的10个元素
+</code></pre>
+
+<p>多进程调试</p>
+<pre><code>#查看父进程和子进程
+set follow-fork-mode ?
+
+shell ps
+#查看程序里面有多少个进程
+info inferiors
+
+切到进程1
+inferior 1 
+</code></pre>
+
+<p>多线程调试</p>
+<pre><code>info thread
+</code></pre>
+
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

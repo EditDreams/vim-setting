@@ -1,0 +1,394 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+	
+<LinearLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+	
+	<!--C++语法 title-->
+	<TextView
+		android:text="c++语法"
+		android:textColor="#ffffff"
+		android:background="#3f51b5"
+		android:textSize="17sp"
+		android:gravity="center"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"/>
+	<TextView
+			android:text="@string/gram1"
+			android:textColor="#828282"
+			android:background="#c7c7c7"
+			android:textSize="16sp"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"/>
+		
+		<!--枚举-->
+		<TextView
+			android:background="#eeeed1"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/gram1_meiju"/>
+	<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="horizontal"
+		android:gravity="center">
+
+        <EditText
+            android:id="@+id/et_meiju"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="#000000"
+			android:textColor="#228b22"
+			android:gravity="left"
+			android:focusable="false"
+            android:text="//代码
+			\n#include&lt;iostream&gt;
+			\nusing std::cout;
+			\nenum Button {
+			\nup = 72, down = 80, left = 75, right = 77,
+			\nW = 'w', S = 's', A = 'a', D = 'd'
+			\n};
+			\nint main()
+			\n{
+			\n	enum Button button;//定义一个枚举变量
+			\n	button = right;
+			\n	cout&lt;&lt;&quot;button=&quot;&lt;&lt;button&lt;&lt;std::endl;//button=77
+			\n	cout&lt;&lt;&quot;W=&quot;&lt;&lt;W;                  //W=119
+			\n	return 0;
+			\n}
+			"/>
+		/>
+        <TextView
+            android:id="@+id/btn_cmeiju"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="复制代码"
+		/>
+    </LinearLayout>
+
+		<!--数组-->
+		<TextView
+			android:background="#eeeed1"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/gram1_shuzu"/>
+			
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="150dp"
+				android:orientation="horizontal"
+				android:gravity="center">
+
+			<EditText
+				android:id="@+id/et_shuzu"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+				android:layout_height="wrap_content"
+				android:background="#000000"
+				android:textColor="#228b22"
+				android:gravity="left"
+				android:focusable="false"
+				android:text="//代码
+				\n#include&lt;iostream&gt;
+				\n#define SIZE 10
+				\nusing std::cout;
+				\nint main()
+				\n{
+				\nchar* p1 = &quot;hello&quot;;//hello存放在静态存储区
+				\nchar* p2 = &quot;i love chinat&quot;;
+				\nchar* pArr[2] = { p1,p2 };//指针数组
+				\nfor (int i = 0; i &lt; 2; ++i)
+				\n{
+				\n	cout &lt;&lt; pArr[i];//输出结果helloi love china
+				\n}
+				\nint arr[SIZE];
+				\nmemset(arr, 0, sizeof(arr));//把数组arr的内存设置为0值
+				\n//arr[SIZE]={0};//初始化第一个元素为0，其余默认为0
+				\nfor (int i = 0; i &lt; SIZE; ++i)
+				\n{
+				\n	cout &lt;&lt; arr[i];//0000000000
+				\n}
+				\n//通过指针访问数组元素
+				\n//通过数组下标访问数组元素
+				\nreturn 0;
+				\n}"
+			/>
+			<TextView
+				android:id="@+id/btn_cshuzu"
+				android:layout_width="20dp"
+				android:layout_height="match_parent"
+				android:gravity="center"
+				android:text="复制代码"/>
+			</LinearLayout>
+
+			<!--参数表-->
+			<TextView
+				android:background="#eeeed1"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:text="实参形参格式总结"/>
+			<ImageView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:background="#eeeed1"
+				android:src="@drawable/table"/>
+		<!--指针-->
+		<TextView
+			android:background="#eeeed1"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/gram1_zhizhen"/>
+
+		<!--引用-->
+		<TextView
+			android:background="#eeeed1"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/gram1_yinyong"/>
+		
+				<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="150dp"
+				android:orientation="horizontal"
+				android:gravity="center">
+
+			<EditText
+				android:id="@+id/et_yinyong"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+				android:layout_height="wrap_content"
+				android:gravity="left"
+				android:background="#000000"
+				android:textColor="#228b22"
+				android:focusable="false"
+				android:text="//代码
+				\n#include&lt;iostream&gt;
+				\nusing std::cout;
+				\nvoid swap(int &amp;a, int &amp;b);
+				\nint main()
+				\n{
+				\n	//1.对数组的引用
+				\n	int arr[3] = { 1,2,3 };
+				\n	int(&amp;refeArr)[3] = arr;
+				\n	for (int i = 0; i &lt;  3; ++i)
+				\n	{
+				\n		cout &lt;&lt;  &amp;refeArr[i] &lt;&lt;&quot; &quot; &lt;&lt;&amp;arr[i] &lt;&lt; std::endl;
+				\n		//00A1FE74 00A1FE74
+				\n		//00A1FE78 00A1FE78
+				\n		//00A1FE7C 00A1FE7C
+				\n	}
+				\n	
+				\n	//2.对指针的引用
+				\n	int a = 10;
+				\n	int* p = &amp;a;
+				\n	int* &amp;prefe = p;
+				\n	
+				\n	//3.引用作为函数参数
+				\n	int value1 = 5, value2 = 6;
+				\n	swap(value1, value2);
+				\n	cout &lt;&lt;  value1 &lt;&lt;  value2;//65
+				\n	//使用引用作为函数参数，系统不会花费时间在内存开辟空间
+				\n	//参数数据大时一般使用引用
+				\n
+				\n	//4.常引用
+				\n	const int &amp;crefe = a;
+				\n	cefer = 11;//错误
+				\n	return 0;
+				\n}
+				\nvoid swap(int &amp;a, int &amp;b)
+				\n{
+				\n	int temp = a;
+				\n	a = b;
+				\n	b = temp;
+				\n}"
+			/>
+			<TextView
+				android:id="@+id/btn_cyinyong"
+				android:layout_width="20dp"
+				android:layout_height="match_parent"
+				android:gravity="center"
+				android:text="复制代码"/>
+			</LinearLayout>
+		<!--联合-->
+		<TextView
+			android:background="#eeeed1"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/gram1_lianhe"/>
+		<!--结构体-->
+		<TextView
+			android:background="#eeeed1"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/gram1_jiegouti"/>
+		<!--临时对象-->
+		<TextView
+			android:background="#eeeed1"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/gram1_linshiduixiang"/>
+			
+						<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="150dp"
+				android:orientation="horizontal"
+				android:gravity="center">
+
+			<EditText
+				android:id="@+id/et_linshiduixiang"
+				android:layout_width="0dp"
+				android:layout_weight="1"
+				android:layout_height="wrap_content"
+				android:gravity="left"
+				android:background="#000000"
+				android:textColor="#228b22"
+				android:focusable="false"
+				android:text="//代码
+				\n#include&lt;iostream&gt;
+				\n#include&lt;string&gt;
+				\nusing std::cout;
+				\nusing std::string;
+				\nclass Integer {
+				\nprivate:
+				\n	int value;
+				\npublic:
+				\n	Integer(int val = 0) : value(val) 
+				\n	{
+				\n
+				\n	}
+				\n	Integer(const Integer&amp; rhs) : value(rhs.value) 
+				\n	{
+				\n
+				\n	}
+				\n	~Integer() 
+				\n	{
+				\n
+				\n	}
+				\n	Integer&amp; operator=(const Integer&amp; rhs);
+				\n	friend Integer operator+(const Integer&amp; a, const Integer&amp; b);
+				\n};
+				\nInteger operator+(const Integer&amp; a, const Integer&amp; b) {
+				\n	Integer retVal;
+				\n	retVal.value = a.value + b.value;
+				\n	return retVal; //按值返回
+				\n}
+				\n
+				\nvoid test(const string&amp; str);
+				\nvoid test2(int values);
+				\nint main()
+				\n{
+				\n	char buffer[] = &quot; buffer&quot;;
+				\n	test(buffer); // 1.此时发生类型转换
+				\n
+				\n	//2.按值传递,产生临时对象
+				\n	int val=8;
+				\n	test2(val);
+				\n
+				\n	//3.按值返回
+				\n	Integer c1, c2, c3;
+				\n	c3 = c1 + c2;
+				\n
+				\n	//4.对象定义
+				\n	//在表达式被用来初始化一个object时
+				\n	string progName(&quot;test&quot;);
+				\n	string progVersion(&quot;ver-1.0&quot;);
+				\n	string progNameVersion = progName + progVersion;
+				\n	//当一个临时对象被一个reference绑定时
+				\n	const string&amp; name = &quot;C++&quot;;
+				\n	return 0;
+				\n}
+				\nvoid test(const string&amp; str)
+				\n{
+				\n	cout &lt;&lt;  str;
+				\n}"
+			/>
+			<TextView
+				android:id="@+id/btn_clinshiduixiang"
+				android:layout_width="20dp"
+				android:layout_height="match_parent"
+				android:gravity="center"
+				android:text="复制代码"/>
+			</LinearLayout>
+
+
+	<!--模板-->
+	<TextView
+		android:text="@string/gram2"
+		android:textColor="#828282"
+		android:background="#c7c7c7"
+		android:textSize="16sp"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"/>
+	<TextView
+		android:background="#eeeed1"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="模板文本。。。。。。"/>
+
+	<!--STL-->
+	<TextView
+		android:text="@string/gram3"
+		android:textColor="#828282"
+        android:background="#c7c7c7"
+		android:textSize="16sp"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"/>
+	<TextView
+		android:background="#eeeed1"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="stl文本。。。。。。。"/>
+	
+	<!--输入输出流-->
+	<TextView
+		android:text="@string/gram4"
+		android:textColor="#828282"
+        android:background="#c7c7c7"
+		android:textSize="16sp"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"/>
+	<TextView
+		android:background="#eeeed1"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="输入输出文本。。。。。。。"/>
+	
+	
+	<!--文件操作-->
+	<TextView
+		android:text="@string/gram5"
+		android:textColor="#828282"
+        android:background="#c7c7c7"
+		android:textSize="16sp"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"/>
+	<TextView
+		android:background="#eeeed1"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="文件操作文本。。。。。。。。"/>
+	
+	<!--异常-->
+	<TextView
+		android:text="@string/gram6"
+		android:textColor="#828282"
+        android:background="#c7c7c7"
+		android:textSize="16sp"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"/>
+	
+	<TextView
+		android:background="#eeeed1"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="异常文本。。。"/>
+	
+</LinearLayout>
+</ScrollView>

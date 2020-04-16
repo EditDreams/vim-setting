@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <item
+        android:id="@+id/connect"
+        android:title="联系作者"/>
+	
+	<item
+        android:id="@+id/update"
+        android:title="版本更新"/>
+    
+</menu>

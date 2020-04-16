@@ -1,0 +1,117 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+	android:fillViewport="true">
+<TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+	android:fitsSystemWindows="true"
+	android:clipToPadding="true"
+	android:background="#3f51b5">
+	
+	
+
+	<TextView
+		android:text="  ☠☠☠☠☠☠☠☠☠☠☠☞功能☜☠☠☠☠☠☠☠☠☠☠☠"
+		android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+		/>
+		
+		
+    <Button
+		android:id="@+id/grammer"
+		android:layout_width="100dp"
+        android:layout_height="75dp"
+		android:background="@drawable/bg"
+		android:textColor="@drawable/bg_color"
+		android:text="c++语法"
+		android:onClick="onButtonClickGram"/>
+	
+	<Button
+		android:layout_marginTop="2dp"
+		android:id="@+id/structure"
+		android:layout_height="75dp"
+		android:layout_width="100dp"
+		android:background="@drawable/bg"
+		android:textColor="@drawable/bg_color"
+		android:text="数据结构"
+		android:onClick="onButtonClickStru"/>
+	<Button
+		android:layout_marginTop="2dp"
+		android:id="@+id/algorithm"
+		android:layout_height="75dp"
+		android:layout_width="100dp"
+		android:background="@drawable/bg"
+		android:textColor="@drawable/bg_color"
+		android:text="算法详解"
+		android:onClick="onButtonClickAlgo"/>
+	<Button
+		android:layout_marginTop="2dp"
+		android:id="@+id/program"
+		android:layout_height="75dp"
+		android:layout_width="100dp"
+		android:background="@drawable/bg"
+		android:textColor="@drawable/bg_color"
+		android:text="程序例子"
+		android:onClick="onButtonClickProg"/>
+	<Button
+		android:layout_marginTop="2dp"
+		android:id="@+id/question"
+		android:layout_height="80dp"
+		android:layout_width="100dp"
+		android:background="@drawable/bg"
+		android:textColor="@drawable/bg_color"
+		android:text="常见问题"
+		android:onClick="onButtonClickQues"/>
+	
+	
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:baselineAligned="false"
+		android:layout_marginTop="2dp"
+		android:layout_weight="1" >
+		<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:layout_weight="1">
+			<ImageView
+				android:layout_width="200dp"
+				android:layout_height="130dp"
+				android:orientation="horizontal"
+				android:gravity="left"
+				android:src="@drawable/image"/>
+			
+			<LinearLayout
+				android:orientation="vertical"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1">
+				<TextView
+					android:textColor="#7ccd7c"
+					android:text="根本固者华实必茂，源流深者光澜必章"
+					android:layout_width="wrap_content"
+					android:layout_height="70dp"
+					android:layout_weight="1"/>
+				<TextView
+					android:text="版本：1.0.0"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"/>
+				<TextView
+					android:text="网站：www.givemefive.site(网站维护中...)"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"/>
+			</LinearLayout>
+			
+			
+		</LinearLayout>
+	</LinearLayout>
+	
+	
+</TableLayout>
+</ScrollView>

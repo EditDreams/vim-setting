@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">C++手册</string>
+
+	<string name= "gram1">1.构造数据类型</string>
+	<string name= "gram2">2.模板</string>
+	<string name= "gram3">3.STL</string>
+	<string name= "gram4">4.输入输出流</string>
+	<string name= "gram5">5.文件操作</string>
+	<string name= "gram6">6.异常</string>
+	
+	<string name= "gram1_meiju">
+		☃枚举：
+		\n\t\t\t\tC/C++语言可以使用#define和const创建符号常量，
+		而使用enum工具不仅能够创建符号常量，还能定义新的
+		数据类型。</string>
+	<string name= "gram1_shuzu">
+		☂数组：
+		\n\t\t\t\t①指针数组(类型 *p[size]):指针数组常常用于存
+		储一些长度不等的字符串数据;②一维数组：一组数据类型相同的东西，
+		存放在一段连续的内存地址中③二维数组④多维数组"</string>
+	<string name= "gram1_zhizhen">
+		☃指针：
+		\n\t\t\t\t①指针常量②常量指针；③函数指针:④数组指针
+		\n常量指针：又叫常指针，可以理解为常量的指针，也即这个是指针，但指向的是个常量，这个常量是指针的值（地址），而不是地址指向的值。
+		\n关键点：
+		\n1.常量指针指向的对象不能通过这个指针来修改，可是仍然可以通过原来的声明修改；
+        \n2.常量指针可以被赋值为变量的地址，之所以叫常量指针，是限制了通过这个指针修改变量的值；
+		\n3.指针还可以指向别处，因为指针本身只是个变量，可以指向任意地址；
+		\n指针常量：本质是一个常量，而用指针修饰它。指针常量的值是指针，这个值因为是常量，所以不能被赋值。
+		\n关键点：
+		\n1.它是个常量！
+        \n2.指针所保存的地址可以改变，然而指针所指向的值却不可以改变；
+		\n3.指针本身是常量，指向的地址不可以变化,但是指向的地址所对应的内容可以变化；
+</string>
+	<string name= "gram1_yinyong">
+		☂引用：
+		\n\t\t\t\t是某一个变量或对象的别名，对引用的操
+		作与对其所绑定的变量或对象的操作完全等价。
+		\n①对数组的引用②对指针的引用③引用作为函数的参数④常引用：不允许通过该引用对其所绑
+		定的变量或对象进行修改。⑤引用作为函数返回值⑥引用实现多态
+		\n引用注意:
+		\n1、引用标识符不是求地址运算符，而是起标记作用。
+		\n2、引用的类型必须和其所绑定的变量的类型相同。
+		\n3、声明引用的同时必须对其初始化，否则系统会出错。
+		\n4、引用相当于变量或对象的别名，因此不能再将已有的引用名作为其他变量或对象的名字或别名。
+		\n5、引用不是定义一个新的变量或对象，因此不会为引用开辟新的空间存储这个引用。
+		\n常引用:不允许通过该引用对其所绑定的变量或对象进行修改。
+		\n引用作为函数返回值:必须在定义函数时在函数名前加引用标识符。
+</string>
+	<string name= "gram1_lianhe">
+		☃联合：
+		\n\t\t\t\t①暂时对联合没有深入了解。。此处日后完善。。。。"</string>
+	<string name= "gram1_jiegouti">
+		☂结构体：
+		\n\t\t\t\t是由一系列具有相同类型或不同类型的数据构成的数据集合。
+		</string>
+	<string name= "gram1_linshiduixiang">
+		☂临时对象：
+		\n\t\t\t\t
+		\n类型转换：它通常是为了让函数调用成功而产生的临时对象。发生于"传递某对象给一个函数，而其类型与它即将绑定上去的参数类型不同"的时候
+		\n按值传递：这通常也是为了让函数调用成功而产生临时对象。
+		\n按值返回：如果函数是按值返回的，那么编译器很可能为之产生临时对象。
+		\n对象定义
+		\n临时对象的生命周期规则有2个例外：
+		\n1、在表达式被用来初始化一个object时。
+		\n2、当一个临时对象被一个reference绑定时。（如果一个临时对象被绑定于一个reference，对象将保留，直到被初始化的reference的生命结束，或直到临时对象的生命范围结束）
+。</string>
+		
+  
+	<string name= "stru1">1.顺序表</string>
+	<string name= "stru2">2.单链表</string>
+	<string name= "stru3">3.树</string>
+	<string name= "stru4">4.栈</string>
+	<string name= "stru5">5.队列</string>
+	<string name= "stru6">6.并查集</string>
+	<string name="stru1_text">struct1_text文本</string>
+	
+	
+	<string name= "algo1">1.排序算法</string>
+	<string name= "algo2">2.递归算法</string>
+	<string name= "algo3">3.广度搜寻算法</string>
+	<string name= "algo4">4.深度搜寻算法</string>
+	<string name="algo1_text">algo1_text文本</string>
+	
+	<string name= "prog1">代码例子</string>
+	<string name= "prog2">代码例子</string>
+	<string name= "prog3">代码例子</string>
+	<string name="prog1_text">prog1_text文本</string>
+	
+	<string name= "ques1">什么是tcp/ip?</string>
+	<string name= "ques2">什么是多线程？怎么实现？</string>
+	<string name= "ques3">什么是高并发？</string>
+	<string name="ques1_text">ques1_text文本</string>
+</resources>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>问题关于c和c++</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<h1>问题关于c和c++</h1>
+<p>1.heap（堆）和stack（栈）的区别<br />
+答：heap（堆）上的空间是手动分配与释放的。stack（栈）上的空间是自然分配的与释放的。<br />
+   stack（栈）空间是有限的，heap（堆）空间是很大的自由存储区。  
+</p>
+<p>2.全局变量与局部变量的区别<br />
+答：作用域不同：全局变量作用域为整个程序，局部变量的作用域为当前语句块。<br />
+   内存存储方式：全局变量在全局数据区，局部变量存储在栈上。<br />
+   生命周期不同：全局变量的生命周期和程序一样，局部变量随着语句块的结束而结束。<br />
+   当局部变量和全局变量重名时，优先使用局部变量，使用全局是要用域成员运算符。  
+</p>
+<p>3.结构体与联合的区别<br />
+答：结构体与联合是由不同的数据类型组成，但在任何时刻，联合只存在一个被选中的成员，结构体的所有成员都存在。<br />
+   在结构体中，各成员占有自己的存储空间，总大小等于各成员的大小之和。（内存对齐？）<br />
+   在联合中，所有成员共用一块存储空间，其大小等于联合中最大成员的大小。  
+</p>
+<p>4.数组与指针的区别<br />
+答：数组要么在静态存储区，要么在栈上被创建，数组名对应着一块内存，其容量与地址在生命周期内保持不变。<br />
+   指针可以随时指向任意类型的内存块，它的特征是可变，比数组零活，但也危险。  
+</p>
+<p>5.指针函数与函数指针的区别<br />
+答：指针函数是一个函数，它返回一个指针。函数指针是一个指针，这个指针所指的对象是一个函数。  
+</p>
+<p>6.常量与变量的区别<br />
+答：常量是只读不可写，变量是可读可写。<br />
+   常量必须初始化，变量可以不初始化。<br />
+   常量不可以寻址，它的地址不可以赋给非常量指针，变量可以寻址。<br />
+   常量的效率比变量高。  
+</p>
+<p>7.指针自增自减与变量自增自减有扫描区别  <br />
+答：指针自增自减是改变指针所指的对象，变量自增自减是改变变量的值。  
+</p>
+<p>8.#error的作用是什么<br />
+答：编译程序时，只要遇到#error就会跳出一个编译错误。  
+</p>
+<p>9.#include&lt;file.h&gt;和#include&quot;file.h&quot;有什么区别<br />
+答：#include&lt;file.h&gt;表示该文件存在编译器所指定的标准头文件存放处。<br />
+   #include&quot;file.h&quot;表示该文件在用户当前的工作目录下。  
+</p>
+<p>10.头文件中的ifndef/define、endif的作用<br />
+答：防止头文件被重复引用。  
+</p>
+<p>11.常见的条件语句的比较写法  <br />
+答：bool类型。if(flag)建议使用,if(flag==true)不建议使用,因为true值的定义没有统一的标准。  <br />
+   int类型。if(value!=0)建议使用，if(value)不建议使用，会让人误解为bool类型。<br />
+   float类型。if(x&gt;-EPSINON&amp;&amp;x&lt;EPSINON)建议使用，if(x==0.0)不建议使用，精度问题。<br />
+   指针。if(p==NULL)建议使用，强调p为指针，if(p==0)不建议，会让人误解为int。  
+</p>
+<p>12.用#define实现宏并求最大值最小值  <br />
+答：#define MAX(x,y) ((x)&gt;(y))?(x):(y)<br />
+   #define MIN(x,y) ((x)&lt;(y))?(x):(y)  
+</p>
+<p>13.break语句和continue语句有什么区别<br />
+答：continue语句只能出现在循环语句中，表示结束本次循环，break语句还可以出现在switch语句内，表示结束switch语句，在循环语句内表示结束整个循环。</p>
+<p>14.static关键字<br />
+答：用于全局变量。表示该变量是静态全局变量，作用域为当前文件。<br />
+   用于函数。该函数为静态函数，只能在本文件中调用，静态函数在内存中只有一份，普通函数在内存中维持一份拷贝。<br />
+   用于局部变量。为静态局部变量，只初始化一次，之后调用函数是都是上次函数退出时的值，即改变变量的生存周期为整个程序运行时间段内。<br />
+   static静态成员函数。表示这个函数属于此而不属于此类的任何对象，不能访问非静态变量和函数，该函数在该类中是唯一的。<br />
+   static成员变量。表示该变量是属于此类而不属于此类的任何对象，该变量的初始化在类外。  
+</p>
+<p>15.const关键字<br />
+答：修饰一般常量。<br />
+   修饰数组。<br />
+   修饰指针。  
+</p>
+<p>16.const与宏的区别<br />
+答：编译时刻。宏在预编译时刻，const在编译时刻。<br />
+   编译检查。宏不会编译检查，const有编译检查。<br />
+   宏的好处。宏可以定义函数、方法等，const不可以。<br />
+   宏的坏处。大量使用宏，会导致预编译的时间过长。  
+</p>
+<p>17.带参宏与函数的区别<br />
+答：处理时间不同。宏是在预编译时刻，函数是在运行时间。<br />
+   带参宏没有参数类型，函数具有参数类型。<br />
+   带参宏不分配内存，函数需要分配内存。<br />
+   宏会使函数变长，函数不会。<br />
+   宏不占用运行时间，函数在调用时刻和返回时刻占用时间。  
+</p>
+<p>18.局部变量与全局变量有什么区别<br />
+答：局部变量存储在栈区，全局变量存储在静态数据区。  
+</p>
+<p>19.引用和指针的区别<br />
+答：非空区别。指针可以指向NULL，引用必须指向某个对象。<br />
+   可修改区别。指针可以指向不同的对象，引用总是指向初始化的对象。<br />
+   合法性区别。在使用指针之前要判但指针是否为NULL，引用不需要判断。  
+</p>
+<p>20.malloc()和calloc()的区别<br />
+答：malloc和calloc都是在堆区上申请动态内存空间。<br />
+   malloc只有一个参数，即要分配内存大小。<br />
+   calloc函数有两个参数，分别是元素的个数与元素的大小。<br />
+   malloc不能对内存初始化，calloc对内存的每一位初始化为0。  
+</p>
+<p>21.strcpy、sprint、memcpy函数的区别<br />
+答：strcpy函数操作的对象是字符串，完成从源字符串到目的字符串的拷贝。<br />
+   sprint函数操作对象不限于字符串，是实现其他数据类型吸纳高字符串的转化，方法中需要指定源对象的数据类型，如果源对象是字符串，也可以实现字符串的拷贝功能。<br />
+   memcpy内存的拷贝，实现将一个内存的内容复制到另一个内存块，内存块由首地址及长度决定。  
+</p>
+<p>22.strcpy函数为什么要返回char*类型<br />
+答：增加代码的灵活性，方便其他函数直接调用。  
+</p>
+<p>23.new、delete与malloc、free的区别<br />
+答：都是在堆上进行动态内存的分配与释放。<br />
+   new delete是c++的运算符，malloc free是函数。<br />
+   new会自动调用对象的构造函数，返回相应的类型。<br />
+   malloc只会申请指定大小的内存，返回void*类型（不能舒适华对象）。<br />
+   delete与new配对，会调用析构函数。<br />
+   free与malloc配对，只是内存的释放，不会调用析构函数。  
+</p>
+<p>24.关于静态内存的分配和动态内存分配的区别及过程<br />
+答：静态内存的分配是在编译时刻完成的，不占用cpu资源。动态内存分配是在运行时刻完成，分配与释放占用cpu运行时间。<br />
+   静态内存分配是在栈上的，动态内存分配是在堆上分配的。<br />
+   动态内存分配需要指针或引用数据类型的支持，而静态内存不需要。<br />
+   静态内存分配是按计划分配的，在编译前确定内存块大小，动态内存分配运行时按需分配。<br />
+   静态内存的分配是把内存的控制权交给了编译器，动态内存的分配是把内存的分配交给了程序员。<br />
+   静态内存分配的效率比动态内存分配的效率高，因为动态内存的分配与释放需要额外的开销。动态内存管理水平严重依赖于程序员的水平，处理不当容易造成内存泄漏。</p>
+<p>25.一个短小的函数在c和c++中分别用什么实现<br />
+答：在c++中用内联函数实现，在c中用宏实现。  
+</p>
+<p>26.在c++程序中调用被c编辑器变异后的函数，为什么要加extern C？<br />
+答：c++语言支持函数的重载，c语言不支持函数的重载，编译后参数的名字不同，函数被c++编译器编译后产生的名字为函数名加参数列表类型名之类的名字，而c编辑器编译后产生的名字为函数名。</p>
+<p>27.一个由c/c++编译器编译过的程序有哪几个部分<br />
+答：栈区。由编译器自动编译，释放；存储函数参数的值，局部变量的值等。其操作方式类似于数据结构中的栈。<br />
+   堆区。由程序员分配与释放，如果程序员没有释放在程序结束时可能由os释放，存储结构类似于链表。<br />
+   全局区全局变量和静态变量存储在这一块，初始化的全局变量与静态变量在一块，未出货的全局变量存放在静态变量相邻的一块，程序结束后由系统释放。<br />
+   文字常量区。常量字符串存放在此处，程序结束后系统自动释放。<br />
+   程序代码区。存放函数体的二进制代码。  
+</p>
+<p>28.c和c++有什么区别<br />
+答：c语言是面向结构化的编程语言，它是面向过程的，c语言编程考虑的是实现的过程。<br />
+   c++是面向对象的，c++编程考虑的是整个程序的模型。</p>
+<p>29.虚析构函数与析构函数的区别<br />
+答：加上virtual后，就会先执行子类的析构函数，再执行基类的析构函数。不执行析构函数，就可能存在内存泄漏。  
+</p>
+<p>30.面向对象与面向过程的区别<br />
+答：面向对象是一种以对象为中心的编程思想，以消息进行驱动，程序=对象+消息；<br />
+   面向过程是一种以应用为中心的变成思想，程序=算法+思想。</p>
+<p>31.“extern c”的作用<br />
+答：extern c是告诉编译器这段代码以c语言进行编译。</p>
+<p>32.类成员函数的重载、重写、隐藏的区别<br />
+答：重载：在一个类中，方法名相同，参数列表不同，与virtual不同。<br />
+   重写：也叫覆盖，指在子类中定义一个与父类中的虚函数并且实现。<br />
+   隐藏：派生类函数与基类函数名相同，但参数不同，或者参数相同但父类不是虚函数。</p>
+<p>33.多态的实现？<br />
+答：简单的说就是子类实现了父类的虚函数，父类指针不仅可以调用自己的这个函数，当指向子类时可以调用子类的这个函数，从而实现了多态。  
+</p>
+<p>34.多态的作用？<br />
+答：实现了动态联编，使程序的运行效率更高，更容易维护。</p>
+<p>35.默认的拷贝构造函数的缺陷<br />
+答：存在着浅拷贝的问题，主要是在类内中定义指针变量时，只拷贝地址，两个对象的指针变量指向同一块地址空间。 </p>
+<p>36.简述成员函数、全局函数、友元函数的区别<br />
+答：成员函数只能由实例化对象调用（静态成员函数除外）。<br />
+   全局函数可在任何时刻调用。<br />
+   友元函数可以让类的友元类对象调用（友元类或函数可以访问私有成员函数和变量）。  
+</p>
+<p>37.什么时候会使用复制（拷贝）构造函数<br />
+答：一个对象以值的方式传入函数体。<br />
+   一个对象以值传递的方式从函数中返回。<br />
+   一个对象需要通过另外一个对象初始化。  
+</p>
+<p>38.什么是容器<br />
+答：容器是存放特定对象的集合，在STL中有顺序容器和关联容器。</p>
+<p>39.什么是顺诉容器？有哪几种？<br />
+答：顺序容器是指一组具有相同类型的对象，以严格的线性形式组织在一起的容器，包括vector、deque、list等3种顺序容器。</p>
+<p>40.什么是关联容器，有哪几种？<br />
+答：关联容器可以通过键值对来查找和读取元素的容器，在STL中有四个关联容器，分别是：map、set、multimap、multiset。</p>
+<p>41.什么是异常<br />
+答：异常就是程序运行时出现的不正常，它可能会导致系统无法正常运行甚至停止运行等严重情况。</p>
+<p>42.如何抛出异常<br />
+答：在c++中，系统通过try块和异常处理构成异常处理机制，其中通过catch语句来捕获运行时的异常，并且执行异常处理，通过throw语句来抛出异常。</p>
+<p>43.TCP与UDP的区别<br />
+答：tcp：面向连接、数据是安全的、效率低、基于数据流、可靠<br />
+   udp:面向无连接、数据是不安全的、效率高、基于数据报文、不可靠  
+</p>
+<p>44.tcp/ip协议的主要层次结构<br />
+答：应用层、传输层、网络层、数据链路层、物理层。</p>
+<p>45.epoll的LT.ET模式<br />
+答：二者的差异在于level-trigger模式下只要某个socket处于readable/writable状态，无论什么时候进行epoll<em>write都会返回socket；
+而edge-trigger模式下只有某个socket从unreadable变为readable或从unwritable变为往日的table时，epoll</em>wait才会返回socket。</p>
+<p>46.进程与线程的区别<br />
+答：线程是进程的一个执行单元，也是进程可以调度的实体。<br />
+   线程是调度和分配的基本单位，进程是拥有资源的基本单位。<br />
+   进程可以并发执行，同一进程的多个线程也可以并发执行。<br />
+   进程是拥有资源的独立单位，线程不拥有系统资源，但可以访问进程的资源。<br />
+   在创建线程时，系统要为之分配和回首资源，导致系统的开销明显大于创建或撤销线程的开销。  
+</p>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
