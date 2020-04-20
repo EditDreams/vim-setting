@@ -1,0 +1,177 @@
+filetype on	" 侦测文件类型
+
+" 当新建 .h .c.cpp.sh等文件时自动调用SetTitle 函数
+autocmd BufNewFile *.[ch],*.cpp,Makefile,*.sh exec ":call SetTitle()" 
+
+func SetComment()
+	call setline(1,"/*================================================================") 
+	call append(line("."),   "*   ")
+	call append(line(".")+1, "*   项目名称：".expand("%:t")) 
+	call append(line(".")+2, "*   文件名称：".expand("%:t")) 
+	call append(line(".")+3, "*   创 建 者：Huangdatian")
+	call append(line(".")+4, "*   创建日期：".strftime("%Y年%m月%d日%T")) 
+	call append(line(".")+5, "*   描    述：") 
+	call append(line(".")+6, "*")
+	call append(line(".")+7, "================================================================*/") 
+	call append(line(".")+8, "")
+	call append(line(".")+9, "")
+endfunc
+func SetComment_sh()
+	call setline(1,"#!/bin/bash")
+	call setline(2,"")
+	call setline(3,"#	File Name   : ".expand("%:t"))
+	call setline(4,"#	Author	    : Huangdatian")
+	call setline(5,"#	Create Time : ".strftime("%Y/%m/%d %T"))
+	call setline(6,"#	Description : ")
+	call setline(7,"#				")
+	call setline(8,"#				")
+	call setline(9,"")
+	call setline(10,"")
+endfunc
+func SetComment_Makefile()
+	call setline(1,"OBJS := ")
+	call setline(2,"TARGET = ")
+	call setline(3,"CC  = ")
+	call setline(4,"LIB = ")
+	call setline(5,"CFLAG = ")
+	call setline(6,"")
+	call setline(7,".PHONY:clean")
+	call setline(8,"clean:")
+	call setline(9,"	rm -rf *.o")
+endfunc
+
+func SetTitle()
+	if &filetype == 'make'
+		call SetComment_Makefile()
+	elseif &filetype == 'sh'
+		call SetComment_sh()
+	elseif &filetype == 'c'
+		call SetComment()
+		call append(line(".")+10, "#include<stdio.h>")
+		call append(line(".")+11, "")
+	elseif &filetype == 'cpp'
+		call SetComment()
+		call append(line(".")+10, "#include<iostream>")
+		call append(line(".")+11, "")
+	elseif &filetype == 'h'
+		call SetComment()
+		call append(line(".")+10, "#pragma once")
+		call append(line(".")+11, "")
+	else
+		call setline(1,"")
+	endif
+endfunc
+
+"自动补全
+:inoremap ( ()<ESC>i
+:inoremap ) <c-r>=ClosePair(')')<CR>
+:inoremap { {<CR>}<ESC>O
+:inoremap } <c-r>=ClosePair('}')<CR>
+:inoremap [ []<ESC>i
+:inoremap ] <c-r>=ClosePair(']')<CR>
+:inoremap " ""<ESC>i
+:inoremap ' ''<ESC>i
+function! ClosePair(char)
+    if getline('.')[col('.') - 1] == a:char
+        return "\<Right>"
+    else
+        return a:char
+    endif
+endfunction
+
+
+set nocompatible "不与vi兼容
+set number	 "显示行数
+syntax on	 "语法高亮
+hi MatchParen ctermbg=Yellow guibg=lightblue	" 高亮显示括号的颜色
+set foldmethod=manual "设置手动折叠
+"set foldmethod=syntax "语法规则折叠
+"set foldmethod=indent "依赖缩进折叠
+hi Folded ctermbg=black
+
+let Tlist_Inc_Winwidth=0     "进制自动改变vim窗口大小
+let Tlist_Use_Right_Window=1 "方法列表放在屏幕右侧
+
+set showcmd	 "
+set showmode	 "
+set mouse=a	 "支持使用鼠标
+set encoding=utf-8	"使用utf-8编码
+set cindent	 "c/c++风格缩进
+
+set tabstop=4	 "tab缩进为4个字符
+"set expandtab 	 "自动将tab转成space
+set noexpandtab
+
+set smarttab  
+set shiftwidth=4  
+
+set autoindent	 "按下回车，下一行自动跟上一行保持一致
+
+set t_Co=256  	 "默认8色，开启256色
+set showmatch    "光标遇到括号时，自动高亮另外一个
+set hlsearch     "搜索时，高亮显示匹配结果
+set incsearch    "搜索时，每输入一个字符就显示匹配结果
+
+set nobackup     "不创建备份文件
+set noswapfile   "不创建交换文件
+set undofile     "退出文件后，也保留撤销历史(.un~)
+set undodir=~/.vim/.undo//  "设置撤销历史保存位置
+
+set visualbell   "出错，闪烁提示
+
+set history=500  "历史操作
+set autoread     "打开文件监视
+
+set wildmenu     "低行命令，tab补全
+set wildmode=longest:list,full
+
+set completeopt=longest,menu  "代码补全
+
+
+
+"set ignorecase   "搜索时，忽略大小写
+
+
+"set laststatus=2 "是否显示状态栏，0不显示，1在多窗口显示，2显示
+
+"filetype indent on "开启文件类型检查，并载入该类型的缩进规则
+
+"map命令用于将某个按键与vim命令绑定起来
+
+" 赋值、剪切、粘贴
+map <F7> "+y    
+map <F8> "+x
+map <F9> "+p
+
+" 左侧显示工程目录
+map <F3> :NERDTreeMirror<CR>
+map <F3> :NERDTreeToggle<CR>  
+
+" 添加ctags索引
+set tags+=/usr/tags
+set tags+=~/.vim/tags/cpp_src/tags 
+
+"highlight Directory term=bold cterm=bold ctermbg=Red ctermfg=yellow
+
+"neocomplcache 自动补全插件"
+let g:neocomplcache_enable_at_startup=1 "在系统启动的时候启动
+let g:neocomplcache_enable_auto_select=1 "上下按键选择
+
+"生成标签文件
+filetype plugin on
+
+""set tags+=~/.vim/tags/vim80_plugin_tags
+""set tags+=~/.vim/tags/vim80_tags
+
+"OmniCppComplete
+let OmniCpp_NamespaceSearch = 1
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+" automatically open and close the popup menu / preview window
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+set completeopt=menuone,menu,longest,preview
