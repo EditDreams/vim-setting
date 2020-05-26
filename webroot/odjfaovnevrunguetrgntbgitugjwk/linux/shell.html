@@ -1,0 +1,403 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Made with Remarkable!
+  </title>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <style type="text/css">
+   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
+  </style>
+ </head>
+ <body>
+  <h1 id="shell">
+   掌握shell编程
+  </h1>
+  <p>
+   February 25, 2020 5:46 PM
+  </p>
+  <p>
+   <strong>
+    什么是shell？
+   </strong>
+   <br/>
+   命令行解析器,实现linux系统自动化管理的重要且必要的工具。
+  </p>
+  <p>
+   <strong>
+    shell脚本 语言种类:
+   </strong>
+  </p>
+  <p>
+   <strong>
+    Bourne shell(包括sh,ksh,and bash)
+   </strong>
+   <br/>
+   Bourne shell (sh)
+   <br/>
+   Kor n shell (ksh)
+   <br/>
+   Bourne Again shell (bash)
+   <br/>
+   POSIX shell (sh)
+  </p>
+  <p>
+   <strong>
+    C shell (包括csh and tcsh)
+   </strong>
+   <br/>
+   C shell (csh)
+   <br/>
+   TENEX/TOPS C shell (tcsh)
+  </p>
+  <p>
+   <strong>
+    1.管道：
+   </strong>
+   | 前一个命令的输出作为后一个命令的输入
+   <br/>
+   cat test.c |wc -l #统计多少行
+   <br/>
+   cat test.c |wc -w #统计有多少个单词
+  </p>
+  <p>
+   <strong>
+    2.输入输出重定向:
+   </strong>
+   输入输出重定向是改变shell命令程序默认的标准输入/输出目标，重新定向到新的目标。
+   <br/>
+   linux中默认的标准输入定义为键盘，标准输出定义为终端。
+   <br/>
+   用户还可以当前操作改变输入或输出，迫使某个命令的输入或输出来源为外部文件。
+  </p>
+  <p>
+   &gt;file 将file文件重定向为输出源，新建模式。
+  </p>
+  <pre><code>mabu@mabu:~/work/linux-filesystem-test$ ls -l
+total 20
+-rwxrwxr-x 1 mabu mabu 9984 8月  13 10:20 a.out
+-rw-rw-r-- 1 mabu mabu  187 8月  13 10:19 file.c
+-rw-rw-r-- 1 mabu mabu  160 8月  13 10:22 file.txt
+mabu@mabu:~/work/linux-filesystem-test$ ls -l &gt;file.txt
+mabu@mabu:~/work/linux-filesystem-test$ cat file.txt   
+total 16
+-rwxrwxr-x 1 mabu mabu 9984 8月  13 10:20 a.out
+-rw-rw-r-- 1 mabu mabu  187 8月  13 10:19 file.c
+-rw-rw-r-- 1 mabu mabu0 8月  13 10:22 file.txt
+</code></pre>
+  <p>
+   &gt;&gt;file   将文件重定向为输出源，追加模式。
+  </p>
+  <pre><code>mabu@mabu:~/work/linux-filesystem-test$ ls &gt;&gt;file.txt
+cat file.txt 
+total 16
+-rwxrwxr-x 1 mabu mabu 9984 8月  13 10:20 a.out
+-rw-rw-r-- 1 mabu mabu  187 8月  13 10:19 file.c
+-rw-rw-r-- 1 mabu mabu0 8月  13 10:22 file.txt
+a.out
+file.c
+file.txt
+</code></pre>
+  <p>
+   &lt;file   将文件重定向为输入源。
+  </p>
+  <pre><code>mabu@mabu:~/work/linux-filesystem-test$ wc -l &lt;file.txt
+7
+</code></pre>
+  <p>
+   2&gt;或&amp;&gt;   将由命令产生的错误信息输入到。
+  </p>
+  <pre><code>mabu@mabu:~/work/linux-filesystem-test$ cat file
+cat: file: No such file or directory
+mabu@mabu:~/work/linux-filesystem-test$ cat file 2&gt; log.txt
+mabu@mabu:~/work/linux-filesystem-test$ cat log.txt
+cat: file: No such file or directory
+</code></pre>
+  <p>
+   查看shell版本
+  </p>
+  <pre><code>echo $SHELL
+</code></pre>
+  <p>
+   sh为bash 的软连接：
+  </p>
+  <pre><code>mabu@mabu:/var/log$ ls -l /bin/sh
+lrwxrwxrwx 1 root root 4 7月  16 16:15 /bin/sh -&gt; dash
+</code></pre>
+  <p>
+   创建符号链接(123.sh链接到123)
+  </p>
+  <pre><code>ln -s /usr/local/123.sh /home/abner/work/123
+</code></pre>
+  <p>
+   修改执行权限
+  </p>
+  <pre><code>chmod 777 shell-if.sh 
+./shell-if.sh
+</code></pre>
+  <p>
+   shell脚本运行时，它会先查找环境变量ENV，该变量指定了一个环境文件（通常是
+   <strong>
+    .bashrc,.bash_profile,/etc/bashrc,/etc/profile
+   </strong>
+   ）,然后从该环境变量文件开始执行。
+  </p>
+  <p>
+   <strong>
+    局部变量和环境变量
+   </strong>
+   <br/>
+   环境变量均为大写，可以在命令行中设置，但用户退出时这些变量值也会丢失，因此最好在用户家目录下的.bash_profile文件中或全局配置/etc/bashrc,/etc/profile文件或者/etc/profile.d/中定义。
+  </p>
+  <pre><code>用户环境的配置/root/.abshrc
+全局环境的配置/etc/profile
+</code></pre>
+  <p>
+   <strong>
+    取消变量
+   </strong>
+   unset 变量名
+   <br/>
+   局部变量 本地变量在用户当前shell的生存期的脚本中使用。
+   <br/>
+   如果shell中启动另一个进程或退出。
+   <br/>
+   <strong>
+    普通字符串定义
+   </strong>
+   <br/>
+   变量名=value     #连续的数字、字符串、路径
+   <br/>
+   变量名=’value’   #纯字符串
+   <br/>
+   变量名=”vlaue”   #字符串中有变量，字符串里面需要解析变量要给变量加反引号或$()
+  </p>
+  <p>
+   <strong>
+    命令变量
+   </strong>
+   <br/>
+   Shell 也支持将命令的执行结果赋值给变量，常见的有以下两种方式：
+  </p>
+  <pre><code>变量名=`` 
+变量名=$()
+</code></pre>
+  <p>
+   <strong>
+    特殊变量
+   </strong>
+  </p>
+  <pre><code>$0          #当前脚本的文件名。
+$n          #获取当前shell脚本的第n个参数（n=1..9）,大于9之后要用大括号括起来${10}
+$*          #获取当前shell的所有参数,不加双引号和$@相同，如果加上双引号"$*"，
+            #则表示将所有参数视为单个字符串，相当于"$1$2$3"
+
+$#          #获取当前shell命令行中参数的总个数
+$@          #传递给脚本或函数的所有参数。当被双引号" "包含时，$@ 与 $* 稍有不同
+</code></pre>
+  <p>
+   <strong>
+    shell进程中的特殊状态变量
+   </strong>
+  </p>
+  <pre><code>$$          #当前shell脚本的进程号PID(脚本运行的当前进程ID号)
+$!       #获取上一个在后台工作的进程号PID(后台运行的最后一个进程的进程ID号)
+$?       #获取上一个命令的执行状态返回值（0为成功，非0为失败）
+$-       #显示shell使用的当前选项，与set命令功能相同
+$_       #获取在此之前执行的命令或脚本的最后一个参数
+echo $?     #成功返回0，权限拒绝2，运行失败1~125，找到命令但是无法执行126, 未找到要运行的命令127，命令被系统强制结束128
+</code></pre>
+  <p>
+   文档：man bash ，查找Special Parameter
+  </p>
+  <p>
+   <strong>
+    逻辑运算
+   </strong>
+  </p>
+  <p>
+   整数变量表达式
+  </p>
+  <pre><code>expr1 -eq expr2      #如果两个表达式相等，则结果为真（equal）
+expr1 -ne expr2 　   #如果两个表达式不相等，则结果为真（not equal）
+expr1 -gt expr2 　   #如果 expr1 &gt; expr2 ，则结果为真1（greater）
+expr1 -ge expr2 　   #如果 expr1 &gt;= expr2 ，则结果为真（greater than or equal to）
+expr1 -lt expr2 　   #如果 expr1 &lt; expr2，则结果为真（less then）
+expr1 -le expr2 　   #如果 expr1 &lt;= expr2，则结果为真（less than or equal to）
+!expr   　           #如果表达式为假，则结果为真
+</code></pre>
+  <p>
+   <strong>
+    字符串变量表达式
+   </strong>
+  </p>
+  <pre><code>if  [ $a = $b ]                 #如果string1等于string2，则为真
+if  [ $string1 !=  $string2 ]   #如果string1不等于string2，则为真   
+if  [ -n $string  ]             #如果string 非空(非0），返回0(true)  
+if  [ -z $string  ]             #如果string 为空，则为真
+if  [ $sting ]                  #如果string 非空，返回0 (和-n类似) 
+
+</code></pre>
+  <p>
+   逻辑非 !   条件表达式的相反
+  </p>
+  <pre><code>if [ ! 表达式 ]
+if [ ! -d $num ]   如果不存在目录$num
+</code></pre>
+  <p>
+   逻辑与 –a   条件表达式的并列
+  </p>
+  <pre><code>if [ 表达式1  –a  表达式2 ]
+</code></pre>
+  <p>
+   逻辑或 -o   条件表达式的或
+  </p>
+  <pre><code>if [ 表达式1  –o 表达式2 ]
+</code></pre>
+  <p>
+   算术运算
+  </p>
+  <pre><code>'expr $a + b'  
+'expr $a - b'  
+'expr $a \* b'  
+'expr $a / b'  
+'expr $a % b'  
+</code></pre>
+  <p>
+   条件语句
+  </p>
+  <p>
+   shell脚本中if参数
+  </p>
+  <pre><code>文件表达式
+-e filename     如果 filename存在，则为真
+-d filename     如果 filename为目录，则为真 
+-f filename     如果 filename为常规文件，则为真
+-L filename     如果 filename为符号链接，则为真
+-r filename     如果 filename可读，则为真 
+-w filename     如果 filename可写，则为真 
+-x filename     如果 filename可执行，则为真
+-s filename     如果文件长度不为0，则为真
+-h filename     如果文件是软链接，则为真
+filename1 -nt filename2     如果 filename1比 filename2新，则为真。
+filename1 -ot filename2     如果 filename1比 filename2旧，则为真。
+</code></pre>
+  <p>
+   <strong>
+    单行语句一般要用到分号来区分代码块
+   </strong>
+  </p>
+  <pre><code>if [ 判断条件 ]; then 语句; fi
+
+if [ 判断条件 ]
+then
+    语句一
+else
+    语句二
+fi
+
+</code></pre>
+  <p>
+   <strong>
+    if…else语句
+   </strong>
+  </p>
+  <pre><code>if [ 判断条件 ]
+then
+    语句一
+elif
+then
+    语句二
+fi
+</code></pre>
+  <p>
+   <strong>
+    case语句
+   </strong>
+  </p>
+  <pre><code>case 字符串变量 in
+模式1)
+    命令表1
+    ;;      #相当于c语言中的break
+模式2)
+    命令表2
+    ;;
+    ......
+*)
+    命令表n
+    ;;     
+esac
+</code></pre>
+  <pre><code>case $word in
+[a-z] | [A-Z] ) echo "You have keyin a letter";;
+[1-9] ) echo "You have keyin a number";;                                                
+* ) echo "Unknow input"
+esac  
+</code></pre>
+  <p>
+   <strong>
+    for
+   </strong>
+  </p>
+  <pre><code>for variable in values
+do
+    statements
+done
+带列表的for
+
+for i in {1..10} 
+do
+    echo $i
+done
+
+
+sum=0
+for n in 1 2 3 4 5 6
+do
+echo $n
+ ((sum+=n))
+done
+echo "The sum is "$sum
+列出当前目录下的所有 Shell 脚本文件：
+
+for filename in $(ls *.sh)
+do
+echo $filename
+done
+不带列表的for循环语句，类似于c语言的
+
+for((exp1; exp2; exp3))
+do
+    statements
+done
+http://c.biancheng.net/view/2804.html
+while
+
+while condition
+do
+    statements
+done
+</code></pre>
+  <p>
+   <strong>
+    until
+   </strong>
+  </p>
+  <pre><code>until condition
+do
+    statements
+done
+</code></pre>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+  </script>
+  <script>
+   hljs.initHighlightingOnLoad();
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
+  </script>
+ </body>
+</html>

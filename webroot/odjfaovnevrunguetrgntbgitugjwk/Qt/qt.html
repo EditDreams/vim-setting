@@ -1,0 +1,1430 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Made with Remarkable!
+  </title>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <style type="text/css">
+   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
+  </style>
+ </head>
+ <body>
+  <h1 id="qt5">
+   qt5学习笔记
+  </h1>
+  <p>
+   February 26, 2020 4:31 PM
+  </p>
+  <h4 id="_1">
+   基础控件
+  </h4>
+  <p>
+   <strong>
+    1、QCheckBox和QButtonGroup
+   </strong>
+   <br/>
+   QCheckBox复选框
+   <br/>
+   QButtonGroup单选框
+  </p>
+  <pre><code>//mainwindow.h
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
+
+#include &lt;QMainWindow&gt;
+
+#include &lt;QComboBox&gt;
+#include &lt;QWidget&gt;
+#include &lt;QDebug&gt;
+#include &lt;QCheckBox&gt;
+#define QCHECKSIZE 3 //size of check number
+
+namespace Ui {
+class MainWindow;
+}
+
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+
+    QCheckBox *exclusive[QCHECKSIZE];    //3
+    QCheckBox *unexclusive[QCHECKSIZE];
+    QButtonGroup *chk_group[2];
+public slots:
+    void chkChanged();
+private:
+    Ui::MainWindow *ui;
+};
+
+#endif // MAINWINDOW_H
+
+</code></pre>
+  <pre><code>#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+
+    //QCheckBox make two group for examples
+    chk_group[0]=new QButtonGroup(this);
+    chk_group[1]=new QButtonGroup(this);
+    int xpos=20;
+    int ypos=20;
+    QString str_chk_1[3]={"red","green","yellow"};
+    QString str_chk_2[4]={"up","down","left"};
+
+    for(int i=0;i&lt;QCHECKSIZE;++i){
+        exclusive[i]=new QCheckBox(str_chk_1[i],this);
+        exclusive[i]-&gt;setGeometry(xpos,ypos,100,30);
+        chk_group[0]-&gt;addButton(exclusive[i]);  //first group setExclusive(flase)
+
+        unexclusive[i]=new QCheckBox(str_chk_2[i],this);
+        unexclusive[i]-&gt;setGeometry(xpos+120,ypos,100,30);
+        chk_group[1]-&gt;addButton(unexclusive[i]);//true
+
+        connect(exclusive[i],SIGNAL(clicked()),this,
+                SLOT(chkChanged()));
+        //unexclusive is not connect.
+        ypos+=40;
+    }
+    chk_group[0]-&gt;setExclusive(false); //more than one choose
+    chk_group[1]-&gt;setExclusive(true);  //one choose
+
+}
+void MainWindow::chkChanged()
+{
+    qDebug()&lt;&lt;"function chkChanged is called\n";
+}
+MainWindow::~MainWindow()
+{
+    for(int i=0;i&lt;2;++i){
+        if(chk_group!=nullptr)
+            delete chk_group[i];
+    }
+    for(int i=0;i&lt;3;++i){
+        if(exclusive!=nullptr&amp;&amp;unexclusive!=nullptr){
+            delete exclusive[i];
+            delete unexclusive[i];
+        }
+    }
+    delete ui;
+}
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="basicwidget/check_group.png"/>
+  </p>
+  <p>
+   <strong>
+    2、QComboBox
+   </strong>
+   <br/>
+   下拉列表框
+  </p>
+  <pre><code>#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
+
+#include &lt;QMainWindow&gt;
+
+#include &lt;QComboBox&gt;
+#include &lt;QWidget&gt;
+#include &lt;QDebug&gt;
+
+namespace Ui {
+class MainWindow;
+}
+
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+
+    QComboBox *combtn;
+public slots:
+    void valueChanged();
+
+private:
+    Ui::MainWindow *ui;
+};
+
+#endif // MAINWINDOW_H
+
+</code></pre>
+  <pre><code>//mainwindow.cpp
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+
+    combtn=new QComboBox(this);
+    //combtn-&gt;setGeometry(10,10,100,100);
+    combtn-&gt;addItem("0.hello");
+    combtn-&gt;addItem("1.world");
+    combtn-&gt;addItem(QIcon("/home/abner/Desktop/0101.png"),"2.png");
+
+    bool ret=connect(combtn,SIGNAL(currentIndexChanged(int)),this,SLOT(valueChanged()));
+    if(true==ret)
+        qDebug()&lt;&lt;"successful\n";
+    else {
+        qDebug()&lt;&lt;"failed\n";
+    }
+
+}
+void MainWindow::valueChanged()
+{
+    int currentIndex=combtn-&gt;currentIndex();
+    QString currentText=combtn-&gt;currentText();
+    qDebug()&lt;&lt;"now index is:"&lt;&lt;currentIndex&lt;&lt;'\t'&lt;&lt;currentText;
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+</code></pre>
+  <p>
+   代码运行结果：
+   <br/>
+   <img alt="" src="basicwidget/QComboBox.png"/>
+  </p>
+  <p>
+   <strong>
+    3、QCommandLinkButton
+   </strong>
+   <br/>
+   命令连接按钮
+  </p>
+  <pre><code>//main.c
+#include "mainwindow.h"
+#include &lt;QApplication&gt;
+#include &lt;QCommandLinkButton&gt;
+#include &lt;QWidget&gt;
+
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    MainWindow w;
+
+
+
+    QCommandLinkButton *conlinkbtn=new QCommandLinkButton("Version",
+                                                          "vision project",
+                                                          &amp;w);
+    conlinkbtn-&gt;setGeometry(10,10,100,100);
+    QObject::connect(conlinkbtn,SIGNAL(clicked()),&amp;a,SLOT(quit()));
+    w.show();
+    return a.exec();
+}
+</code></pre>
+  <p>
+   代码运行结果：
+  </p>
+  <p>
+   <img alt="" src="basicwidget/QCommandLinkButton.png"/>
+  </p>
+  <p>
+   <strong>
+    4、QDate类和QDateEdit控件
+   </strong>
+   <br/>
+   QDate::currentDate();//获取系统日期
+   <br/>
+   dayOfYear()          //一年中当前的天数
+   <br/>
+   daysInMonth()        //这年的天数
+   <br/>
+   daysInYear()         //这个月的天数
+  </p>
+  <pre><code>d       显示（1~31）
+dd       显示两位数字的日（01~31）
+ddd     显示三个字母的星期（Mon～Sun）
+dddd       显示完整的星期（Monday～Sunday）
+M         显示月（1~12）
+MM       显示两个数字的月（01~12)
+MMM     显示三个字母的月（Jan～Dec）
+MMMM       显示完整的月（January～December）
+yy       显示两位数字的年（00~99）
+yyyy       显示四位数字的年（2020）
+</code></pre>
+  <pre><code>//mainwindow.h
+#include &lt;QDateEdit&gt;
+#include &lt;QLabel&gt;
+QDateEdit *date_edit[3];
+QLabel *lb1[6];
+</code></pre>
+  <pre><code>//mainwindow.cpp
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+    this-&gt;setGeometry(20,20,500,600);
+
+    //QDate  QDateEdit
+    QDate dt1=QDate(2020,02,28);
+    QDate dt2=QDate::currentDate();
+    date_edit[0]=new QDateEdit(dt1.addYears(2),this);
+    date_edit[0]-&gt;setGeometry(10,10,140,40);
+    date_edit[1]=new QDateEdit(dt1.addYears(-2),this);
+    date_edit[1]-&gt;setGeometry(160,10,140,40);
+    date_edit[2]=new QDateEdit(dt2,this);
+    date_edit[2]-&gt;setGeometry(10,60,140,40);
+
+    switch(dt2.dayOfWeek())
+    {
+    case 1:
+        qDebug()&lt;&lt;"Monday";
+        break;
+    case 2:
+        qDebug()&lt;&lt;"Tuesday";
+        break;
+    case 3:
+        qDebug()&lt;&lt;"Wednesday";
+        break;
+    case 4:
+        qDebug()&lt;&lt;"Thursday";
+        break;
+    case 5:
+        qDebug()&lt;&lt;"Friday";
+        break;
+    case 6:
+        qDebug()&lt;&lt;"Saturday";
+        break;
+    case 7:
+        qDebug()&lt;&lt;"Sunday";
+        break;
+    }
+    qDebug("Day of year:%d\n",dt1.dayOfYear());
+    qDebug("End Day:%d\n",dt1.daysInMonth());
+    qDebug("End Day:%d",dt1.daysInYear());
+
+    QDate dt3=QDate::fromString("2020.02.29","yyyy.MM.dd");
+    QDate dt4=QDate::fromString("06.26","MM.dd");
+
+    lb1[0]=new QLabel(dt3.toString(),this);
+    lb1[0]-&gt;setGeometry(10,110,150,30);
+    lb1[1]=new QLabel(dt4.toString(),this);
+    lb1[1]-&gt;setGeometry(10,150,150,30);
+
+    if(QDate::isValid(3333,3,3)){
+        qDebug("3333,3,3 true");
+    }
+    else {
+        qDebug("3333,3,3  false");
+    }
+    QDate dt5=QDate(2020,2,29);
+
+    QString long_week=dt5.longDayName(dt5.dayOfWeek());
+    QString long_month=dt5.longMonthName(dt5.month());
+    QString str_date_long=QString("%1 %2").arg(long_week).arg(long_month);
+
+    QString short_week=dt5.shortDayName(dt5.dayOfWeek());
+    QString short_month=dt5.shortMonthName(dt5.month());
+    QString str_date_short=QString("%1 %2").arg(short_week).arg(short_month);
+
+    lb1[2]=new QLabel(QString("long:%1 short:%2").arg(str_date_long).arg(str_date_short),this);
+    lb1[2]-&gt;setGeometry(10,190,250,30);
+
+    QDate dt6=QDate(2020,2,29);
+    lb1[3]=new QLabel(dt6.toString(Qt::TextDate),this);  //default style
+    lb1[3]-&gt;setGeometry(10,240,250,30);
+
+    lb1[4]=new QLabel(dt6.toString(Qt::ISODate),this);  //ISO8601 style
+    lb1[4]-&gt;setGeometry(10,270,250,30);
+
+    lb1[5]=new QLabel(dt6.toString(Qt::SystemLocaleDate),this);  //international style
+    lb1[5]-&gt;setGeometry(10,300,250,30);
+
+}
+
+MainWindow::~MainWindow()
+{
+    for (int i=0;i&lt;6;++i) {
+        if(lb1[i]!=nullptr)
+            delete lb1[i];
+    }
+    delete ui;
+}
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="basicwidget/QDate.png"/>
+  </p>
+  <p>
+   <strong>
+    5、QTime类和QTimeEdit控件
+   </strong>
+  </p>
+  <pre><code>QTime类可以显示并编辑时、分、秒、毫秒
+h       显示小时（0~23）
+hh      显示两位数字的小时（00~23）
+m       显示分钟（0~59)
+mm      显示分钟（00~59）
+s
+ss
+z       显示毫秒（0~999）
+zzz
+AP      用大写字母表示上午/下午（AM/PM）
+ap      用小写字母表示
+</code></pre>
+  <pre><code>//mainwindow.h
+#include &lt;QTime&gt;
+#include &lt;QTimeEdit&gt;
+QLabel *lb1[6];
+QTimeEdit *time_edit[3];
+</code></pre>
+  <pre><code>//mainwindow.cpp
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+    this-&gt;setGeometry(20,20,500,600);
+
+    //QTime QTimeEdit
+    QTime ti1=QTime(12,12,55,432);//hour min sec millisecond
+    QTimeEdit *qte;
+    qte =new QTimeEdit(ti1,this);
+    //delete qte;
+    qte-&gt;setGeometry(10,30,150,30);
+    QLabel *lbl_tostring=new QLabel(ti1.toString("AP hh:mm:ss:zzz"),this);
+    lbl_tostring-&gt;setGeometry(200,30,150,30);
+
+    time_edit[0]=new QTimeEdit(ti1.addMSecs(200),this);//add 200 milliseconds
+    time_edit[0]-&gt;setGeometry(10,60,150,30);
+
+    QTime ti2=QTime::currentTime();
+    time_edit[1]=new QTimeEdit(ti2,this);
+    time_edit[1]-&gt;setGeometry(10,90,150,30);
+
+    QTime ti3;
+    ti3.start();
+    for (int i=0;i&lt;10000;++i) {
+        for(int j=0;j&lt;10000;++j)
+        {
+            ;
+        }
+    }
+    qDebug("time is:%d",ti3.elapsed());
+
+    QTime ti4=QTime::fromString("03:32","hh:mm");
+    QLabel *lbl_fromstring=new QLabel(ti4.toString(),this);
+    lbl_fromstring-&gt;setGeometry(10,120,150,30);
+    qDebug()&lt;&lt;"hour:"&lt;&lt;ti2.hour()&lt;&lt;"min:"&lt;&lt;ti2.minute()&lt;&lt;"sec:"&lt;&lt;ti2.second()&lt;&lt;"msec"&lt;&lt;ti2.msec();
+
+
+}
+
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="basicwidget/QTime.png"/>
+  </p>
+  <p>
+   <strong>
+    6、QDateTime类和QDateTimeEdit控件
+   </strong>
+  </p>
+  <pre><code>#include &lt;QDateTime&gt;
+#include &lt;QDateTimeEdit&gt;
+
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+    this-&gt;setGeometry(20,20,500,600);
+
+    //QDateTime  QDateTimeEdit
+    QDateTimeEdit *qdte1;
+    qdte1=new QDateTimeEdit(QDateTime::currentDateTime(),this);
+    qdte1-&gt;setDisplayFormat("yyyy-MM-dd hh:mm:ss:zzz");
+    qdte1-&gt;setGeometry(10,30,250,50);
+
+    //little modify the time
+    QDateTimeEdit *qde[3];
+    qde[0]=new QDateTimeEdit(QDate::currentDate(),this);
+    qde[0]-&gt;setMinimumDate(QDate::currentDate().addYears(-3));
+    qde[0]-&gt;setMaximumDate(QDate::currentDate().addYears(3));
+    qde[0]-&gt;setDisplayFormat("yyyy");
+    qde[0]-&gt;setGeometry(10,90,100,50);
+
+    qde[1]=new QDateTimeEdit(QDate::currentDate(),this);
+    qde[1]-&gt;setMinimumDate(QDate::currentDate().addMonths(-2));
+    qde[1]-&gt;setMaximumDate(QDate::currentDate().addMonths(2));
+    qde[1]-&gt;setDisplayFormat("MM");
+    qde[1]-&gt;setGeometry(110,90,100,50);
+
+    qde[2]=new QDateTimeEdit(QDate::currentDate(),this);
+    qde[2]-&gt;setMinimumDate(QDate::currentDate().addDays(-20));
+    qde[2]-&gt;setMaximumDate(QDate::currentDate().addDays(20));
+    qde[2]-&gt;setDisplayFormat("dd");
+    qde[2]-&gt;setGeometry(210,90,100,50);
+
+}
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="basicwidget/QDateTime.png"/>
+   <br/>
+   <strong>
+    7、QDial
+   </strong>
+  </p>
+  <pre><code>//mainwindow.h
+public:
+    QDial *dial[3];
+public slots:
+    void changedData();
+</code></pre>
+  <pre><code>//mainwindow.cpp
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+    this-&gt;setGeometry(20,20,500,600);
+
+    //QDial
+    int xpos=30;
+    for (int i=0;i&lt;3;++i,xpos+=110) {
+        dial[i]=new QDial(this);
+        dial[i]-&gt;setRange(0,100);
+        dial[i]-&gt;setGeometry(xpos,30,100,100);
+    }
+    dial[0]-&gt;setNotchesVisible(true);
+    connect(dial[0],SIGNAL(valueChanged(int)),this,SLOT(changedData()));
+
+}
+void MainWindow::changedData()
+{
+    qDebug()&lt;&lt;"QDial 1 value :"&lt;&lt;dial[0]-&gt;value();
+}
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="basicwidget/QDial.png"/>
+  </p>
+  <p>
+   <strong>
+    8、QSpinBox和QDoubleSpinBox
+   </strong>
+   <br/>
+   添加字符成员函数：
+   <br/>
+   setPrefix(“$  “);
+   <br/>
+   setSuffix(”  mm”);
+   <br/>
+   //添加信号和槽代码省略
+  </p>
+  <pre><code>#include &lt;QSpinBox&gt;
+#include &lt;QDoubleSpinBox&gt;
+QSpinBox *spin[3];
+QDoubleSpinBox *doublespin[3];
+</code></pre>
+  <pre><code>#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+    this-&gt;setGeometry(20,20,500,600);
+    //QSpinBox QDoubleSpinBox
+    int xpos=10;
+    int ypos=30;
+    int val[3]={50,100,200};
+    double double_val[3]={50.5,127.32,171.342};
+    for (int i=0;i&lt;3;++i) {
+        spin[i]=new QSpinBox(this);
+        spin[i]-&gt;setMinimum(10);
+        spin[i]-&gt;setMaximum(300);
+        spin[i]-&gt;setValue(val[i]);
+        spin[i]-&gt;setGeometry(xpos,ypos,100,30);
+
+        doublespin[i]=new QDoubleSpinBox(this);
+        doublespin[i]-&gt;setMinimum(10.0);
+        doublespin[i]-&gt;setMaximum(300.0);
+        doublespin[i]-&gt;setValue(double_val[i]);
+        doublespin[i]-&gt;setGeometry(xpos+110,ypos,100,30);
+
+        ypos+=40;
+    }
+</code></pre>
+  <p>
+   运行结果：
+  </p>
+  <p>
+   <img alt="" src="basicwidget/QSpinBox.png"/>
+  </p>
+  <p>
+   <strong>
+    9、QPushButton和QFocusFrame
+   </strong>
+  </p>
+  <pre><code>#include &lt;QPushButton&gt;
+#include &lt;QFocusFrame&gt;
+private slots:
+    void btnClick();
+    void btnPressed();
+    void btnReleased();
+</code></pre>
+  <pre><code>#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+    this-&gt;setGeometry(20,20,500,600);
+
+    QPushButton *btn[3];
+    int ypos=30;
+    for (int i=0;i&lt;3;++i) {
+        btn[i]=new QPushButton(QString("Frame's button %1").arg(i),this);
+        btn[i]-&gt;setGeometry(10,ypos,300,40);
+
+        ypos+=50;
+    }
+    connect(btn[0],SIGNAL(clicked()),this,SLOT(btnClick()));
+    connect(btn[0],SIGNAL(pressed()),this,SLOT(btnPressed()));
+    connect(btn[0],SIGNAL(released()),this,SLOT(btnReleased()));
+
+    QFocusFrame *btn_frame=new QFocusFrame(this);
+    btn_frame-&gt;setWidget(btn[0]);
+    btn_frame-&gt;setAutoFillBackground(true);
+}
+void MainWindow::btnClick()
+{
+    qDebug()&lt;&lt;"btnClick()";
+}
+void MainWindow::btnPressed()
+{
+    qDebug()&lt;&lt;"btnPressed()";
+}
+void MainWindow::btnReleased()
+{
+    qDebug()&lt;&lt;"btnRelease()";
+}
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="basicwidget/QPushButton.png"/>
+  </p>
+  <p>
+   <strong>
+    10、QFontComboBox
+   </strong>
+  </p>
+  <pre><code>QFontComboBox::AllFonts             值0      全部字体
+QFontComboBox::ScalableFonts        值0x1    能自动变换扩大和缩小等形态的字体
+QFontComboBox::NonScalableFonts     值0x2    不能自动转换形态的字体
+QFontComboBox::MonospacedFonts      值0x3    固定宽度的字体
+QFontComboBox::ProportionalFonts    值0x4    均衡宽度和幅度的字体
+</code></pre>
+  <pre><code>#include &lt;QFontComboBox&gt;
+public:
+    QFontComboBox *fontcombo[5];
+    QLabel *lb_font;
+private slots:
+    void changedIndex(int idx);
+    void changedFont(const QFont &amp;f);
+</code></pre>
+  <pre><code>#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+    this-&gt;setGeometry(20,20,500,600);
+
+     //QFontComboBox
+    for (int i=0;i&lt;5;++i) {
+        fontcombo[i]=new QFontComboBox(this);
+    }
+
+    fontcombo[0]-&gt;setFontFilters(QFontComboBox::AllFonts);
+    fontcombo[1]-&gt;setFontFilters(QFontComboBox::ScalableFonts);
+    fontcombo[2]-&gt;setFontFilters(QFontComboBox::NonScalableFonts);
+    fontcombo[3]-&gt;setFontFilters(QFontComboBox::MonospacedFonts);
+    fontcombo[4]-&gt;setFontFilters(QFontComboBox::ProportionalFonts);
+
+    int ypos=30;
+    for (int i=0;i&lt;5;++i) {
+        fontcombo[i]-&gt;setGeometry(10,ypos,300,30);
+        ypos+=40;
+    }
+    lb_font=new QLabel("hello world",this);
+    lb_font-&gt;setGeometry(10,ypos,200,30);
+
+    connect(fontcombo[0],SIGNAL(currentIndexChanged(int)),this,
+                         SLOT(changedIndex(int)));
+    connect(fontcombo[0],SIGNAL(currentFontChanged(QFont)),this,
+                         SLOT(changedFont(const QFont &amp;)));
+}
+void MainWindow::changedIndex(int idx)
+{
+    int current_index=idx;
+    qDebug()&lt;&lt;"current index is:"&lt;&lt;current_index;
+}
+void MainWindow::changedFont(const QFont &amp;f)
+{
+    QFont font=f;
+    lb_font-&gt;setFont(font);
+    qDebug()&lt;&lt;"font is :"&lt;&lt;font;
+}
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="basicwidget/QFontComboBox.png"/>
+  </p>
+  <p>
+   <strong>
+    12、QLabel和QLCDNumber
+   </strong>
+  </p>
+  <pre><code>#include &lt;QLCDNumber&gt;
+#include &lt;QLabel&gt;
+QLabel *lb2[2];
+</code></pre>
+  <pre><code>//QLabel QLCDNumber
+lb2[0]=new QLabel("hello world",this);
+lb2[0]-&gt;setGeometry(10,30,200,40);
+
+QPixmap pix=QPixmap("/home/abner/Desktop/0101.png");
+
+lb2[1]=new QLabel(this);
+lb2[1]-&gt;setPixmap(pix);
+lb2[1]-&gt;setGeometry(10,70,100,100);
+
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="basicwidget/QLabel.png"/>
+  </p>
+  <pre><code>    QLCDNumber *lcd[2];
+    lcd[0]=new QLCDNumber(2,this);
+    lcd[0]-&gt;display(24);
+    lcd[0]-&gt;setGeometry(150,30,200,100);
+
+    lcd[1]=new QLCDNumber(5,this);
+    lcd[1]-&gt;display("10:06");
+    lcd[1]-&gt;setGeometry(150,140,200,100);
+
+
+    //lcd[1]-&gt;setSegmentStyle(QLCDNumber::Outline);
+    //Outline  显示与窗口背景相同的颜色
+    //Filled   显示与字体颜色相同的颜色
+    //Flat     不显示字体外框线的风格
+</code></pre>
+  <p>
+   <img alt="" src="basicwidget/QLCDNumber.png"/>
+   <br/>
+   <strong>
+    13、QLineEdit
+   </strong>
+   <br/>
+   对text进行加密函数setEchoMode();
+   <br/>
+   //QLineEdit::Normal            值0  与默认类型一致
+   <br/>
+   //QLineEdit::NoEcho            值1  隐藏输入的文本，不改变光标的位置
+   <br/>
+   //QLineEdit::Password          值2  用“
+   <em>
+    ”表示文本
+    <br/>
+    //QLineEdit::PasswordEchoOnEdit  值3  若编辑文本，则与默认类型一致，但若移动焦点，则显示“
+   </em>
+   ”
+  </p>
+  <pre><code>#include &lt;QLineEdit&gt;
+
+private:
+    QLineEdit *edit;
+    QLabel *lb_le;
+    QLabel *lb_edit;
+    QLineEdit *edit_em[5];
+private slots:
+    void textChanged(QString str);
+</code></pre>
+  <pre><code>#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+    this-&gt;setGeometry(20,20,500,600);
+
+    //QLineEdit
+    edit=new QLineEdit(" ",this);
+    edit-&gt;setGeometry(10,30,100,50);
+    lb_edit=new QLabel(this);
+    lb_le=new QLabel("QLineEdit Text:",this);
+    lb_le-&gt;setGeometry(10,100,100,50);
+
+    connect(edit,SIGNAL(textChanged(QString)),this,
+                 SLOT(textChanged(QString)));
+
+    int ypos=150;
+    for(int i=0;i&lt;5;++i)
+    {
+        edit_em[i]=new QLineEdit("good morning!",this);
+        edit_em[i]-&gt;setGeometry(10,ypos,200,40);
+        ypos+=50;
+    }
+    edit_em[0]-&gt;setEchoMode(QLineEdit::Normal);
+    edit_em[1]-&gt;setEchoMode(QLineEdit::NoEcho);
+    edit_em[2]-&gt;setEchoMode(QLineEdit::Password);
+    edit_em[3]-&gt;setEchoMode(QLineEdit::PasswordEchoOnEdit);
+    }
+void MainWindow::textChanged(QString str)
+{
+    lb_edit-&gt;setText(str);
+    lb_edit-&gt;setGeometry(110,100,100,50);
+}
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="basicwidget/QLineEdit.png"/>
+  </p>
+  <p>
+   <strong>
+    14、QMenu和QMenuBar
+   </strong>
+  </p>
+  <pre><code>#include &lt;QMenu&gt;
+#include &lt;QMenuBar&gt;
+    QMenu *menu[3];
+    QAction *act[2];
+    QMenuBar *menubar;
+    QLabel *lb_menu;
+</code></pre>
+  <pre><code>#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+    //QMenu QMenuBar
+    menu[0]=new QMenu("File");
+    menu[0]-&gt;addAction("Edit");
+    menu[0]-&gt;addAction("View");
+    menu[0]-&gt;addAction("Tools");
+
+    act[0]=new QAction("New",this);
+    act[0]-&gt;setShortcut(Qt::CTRL|Qt::Key_A);
+    act[0]-&gt;setStatusTip("this is a new menu");
+
+    act[1]=new QAction("open",this);
+    act[1]-&gt;setCheckable(true);
+
+    menu[1]=new QMenu("save");
+    menu[1]-&gt;addAction(act[0]);
+    menu[1]-&gt;addAction(act[1]);
+
+    menu[2]=new QMenu("print");
+    menu[2]-&gt;addAction("page setup");
+    menu[2]-&gt;addMenu(menu[1]);
+
+    menubar=new QMenuBar(this);
+    menubar-&gt;addMenu(menu[0]);
+    menubar-&gt;addMenu(menu[2]);
+
+    lb_menu=new QLabel(this);
+    lb_menu-&gt;setGeometry(200,200,150,30);
+    connect(menubar,SIGNAL(triggered(QAction*)),this,
+                    SLOT(trigerMenu(QAction*)));
+
+}
+void MainWindow::trigerMenu(QAction*act)
+{
+    QString str=QString("selected menu:%1").arg(act-&gt;text());
+    lb_menu-&gt;setText(str);
+}
+</code></pre>
+  <p>
+   <img alt="" src="basicwidget/QMenu.png"/>
+   <br/>
+   <strong>
+    15、QProgressBar
+   </strong>
+  </p>
+  <pre><code>#include &lt;QProgressBar&gt;
+QProgressBar *progress[2];
+</code></pre>
+  <pre><code>#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+    //QProgressBar
+    progress[0] =new QProgressBar(this);
+    progress[0]-&gt;setGeometry(0,0,100,30);
+    progress[0]-&gt;setMinimum(0);
+    progress[0]-&gt;setMaximum(100);
+    progress[0]-&gt;setValue(50);
+    progress[0]-&gt;setOrientation(Qt::Horizontal);
+
+    progress[1] =new QProgressBar(this);
+    progress[1]-&gt;setGeometry(0,60,100,30);
+    progress[1]-&gt;setMinimum(0);
+    progress[1]-&gt;setMaximum(100);
+    progress[1]-&gt;setValue(75);
+    progress[1]-&gt;setOrientation(Qt::Horizontal);
+    progress[1]-&gt;setInvertedAppearance(true);//direction
+}
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="basicwidget/QProgressBar.png"/>
+  </p>
+  <p>
+   <strong>
+    16、QRadioButton
+   </strong>
+  </p>
+  <pre><code>#include &lt;QRadioButton&gt;
+QRadioButton *radio[3];
+QRadioButton *radio1[3];
+</code></pre>
+  <pre><code>#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+
+    //QRadioButton
+    QString str_rb_1[3]={"apple","orange","book"};
+    int ypos=30;
+    for (int i=0;i&lt;3;++i) {
+        radio[i]=new QRadioButton(str_rb_1[i],this);
+        radio[i]-&gt;setGeometry(10,ypos,150,30);
+
+        ypos+=40;
+    }
+    QString str_rb_2[3]={"In-Vehicle","Smart TV","Media Phone"};
+    ypos=30;
+    for (int i=0;i&lt;3;++i) {
+        radio1[i]=new QRadioButton(str_rb_2[i],this);
+        if(i==2)
+            radio1[i]-&gt;setChecked(true);
+        radio1[i]-&gt;setGeometry(180,ypos,150,30);
+        ypos+=40;
+    }
+}
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="basicwidget/QRadioButton.png"/>
+   <br/>
+   <strong>
+    17、QScrollArea
+   </strong>
+  </p>
+  <pre><code>#include &lt;QScrollArea&gt;
+QLabel *lb_sa;
+QScrollArea *area;
+</code></pre>
+  <pre><code>#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+    //QScrollArea
+    QImage image("/home/abner/Desktop/test.jpg");
+    lb_sa=new QLabel(this);
+    lb_sa-&gt;setPixmap(QPixmap::fromImage(image));
+    area=new QScrollArea(this);
+    area-&gt;setWidget(lb_sa);
+    area-&gt;setBackgroundRole(QPalette::Dark);
+    area-&gt;setGeometry(0,0,image.width(),image.height()-60);
+}
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="basicwidget/QScrollArea.png"/>
+   <br/>
+   <strong>
+    18、QScrollBar
+   </strong>
+  </p>
+  <pre><code>#include &lt;QScrollBar&gt;
+QScrollBar *vscrollbar[3];
+QScrollBar *hscrollbar[3];
+QLabel *lb_sb[3];
+private slots:
+    void valueChangedSB(int value);
+</code></pre>
+  <pre><code>
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+    //QScrollBar
+    int xpos=10;
+    int ypos=50;
+    for (int i=0;i&lt;3;++i) {
+        vscrollbar[i]=new QScrollBar(Qt::Vertical,this);
+        vscrollbar[i]-&gt;setRange(0,100);
+        vscrollbar[i]-&gt;setGeometry(xpos,30,20,200);
+
+        lb_sb[i]=new QLabel(QString("%1").arg(vscrollbar[i]-&gt;value()),this);
+        lb_sb[i]-&gt;setGeometry(xpos+2,220,30,30);
+        xpos+=50;
+
+        hscrollbar[i]=new QScrollBar(Qt::Horizontal,this);
+        hscrollbar[i]-&gt;setRange(0,100);
+        hscrollbar[i]-&gt;setGeometry(150,ypos,200,20);
+        ypos+=30;
+    }
+
+    connect(vscrollbar[0],SIGNAL(valueChanged(int)),this,
+            SLOT(valueChangedSB(int)));
+}
+void MainWindow::valueChangedSB(int value)
+{
+    lb_sb[0]-&gt;setText(QString("%1").arg(value));
+    hscrollbar[0]-&gt;setValue(vscrollbar[0]-&gt;value());
+}
+</code></pre>
+  <p>
+   运行结果：
+  </p>
+  <p>
+   <img alt="" src="basicwidget/QScrollBar.png"/>
+   <br/>
+   <strong>
+    19、QSizeGrip
+   </strong>
+  </p>
+  <pre><code>//widget.h
+#ifndef WIDGET_H
+#define WIDGET_H
+
+#include &lt;QWidget&gt;
+#include &lt;QSizeGrip&gt;
+#include &lt;QVBoxLayout&gt;
+#include &lt;QTextEdit&gt;
+
+namespace Ui {
+class Widget;
+}
+
+class Widget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit Widget(QWidget *parent = nullptr);
+    ~Widget();
+
+private:
+    Ui::Widget *ui;
+};
+class SubWindow:public QWidget
+{
+    Q_OBJECT
+public:
+    SubWindow(QWidget*parent=0):QWidget(parent,Qt::SubWindow)
+    {
+        QSizeGrip *sizegrip=new QSizeGrip(this);
+        sizegrip-&gt;setFixedSize(sizegrip-&gt;sizeHint());
+
+        this-&gt;setLayout(new QVBoxLayout);
+        this-&gt;layout()-&gt;setMargin(0);
+        layout()-&gt;addWidget(new QTextEdit);
+
+        sizegrip-&gt;setWindowFlags(Qt::WindowStaysOnTopHint);
+        sizegrip-&gt;raise();
+    }
+    QSize sizeHint()const
+    {
+        return QSize(200,100);
+    }
+};
+
+#endif // WIDGET_H
+</code></pre>
+  <pre><code>//widget.cpp
+#include "widget.h"
+#include "ui_widget.h"
+
+Widget::Widget(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::Widget)
+{
+    ui-&gt;setupUi(this);
+}
+
+Widget::~Widget()
+{
+    delete ui;
+}
+</code></pre>
+  <pre><code>//main.cpp
+#include "widget.h"
+#include &lt;QApplication&gt;
+
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    Widget w;
+    w.resize(400,300);
+    SubWindow subwindow(&amp;w);
+    subwindow.move(200,180);
+    w.show();
+
+    return a.exec();
+}
+
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="basicwidget/QSizeGrip.png"/>
+   <br/>
+   <strong>
+    20、QSlider
+   </strong>
+  </p>
+  <pre><code>#include &lt;QSlider&gt;
+    QSlider *slider[4];
+    QLabel *lb_sl;
+private slots:
+    void valueChangedSlider(int value);
+</code></pre>
+  <pre><code>#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+    //QSlider
+    int xpos=0;
+    int ypos=0;
+    for (int i=0;i&lt;4;++i) {
+        if(i&lt;=2){
+            slider[i]=new QSlider(Qt::Vertical,this);
+            slider[i]-&gt;setGeometry(xpos,20,30,80);
+            xpos+=30;
+        }
+        else if (i&gt;=3) {
+           slider[i]=new QSlider(Qt::Horizontal,this);
+           slider[i]-&gt;setGeometry(130,ypos,80,30);
+           ypos+=30;
+        }
+        slider[i]-&gt;setRange(0,100);
+        slider[i]-&gt;setValue(50);
+    }
+    lb_sl=new QLabel(this);
+
+    connect(slider[0],SIGNAL(valueChanged(int)),this,
+            SLOT(valueChangedSlider(int)));
+}
+void MainWindow::valueChangedSlider(int value)
+{
+    lb_sl-&gt;setText(QString("%1").arg(value));
+    slider[3]-&gt;setValue(slider[0]-&gt;value());
+}
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="basicwidget/QSlider.png"/>
+   <br/>
+   <strong>
+    21、QTabWidget
+   </strong>
+  </p>
+  <pre><code>#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+    //QTabWidget
+    QTabWidget *tab=new QTabWidget(this);
+    tab-&gt;setGeometry(50,50,200,200);
+    QWidget *browser_tab=new QWidget;
+    QWidget *user_tab=new QWidget;
+
+    tab-&gt;addTab(browser_tab,QIcon("basicwidget/browser.png"),"Browser");
+    tab-&gt;addTab(user_tab,QIcon("basicwidget/user.png"),"User");
+
+    QString btn_str[3]={"button1","button2","button3"};
+    QPushButton *btn[3];
+
+    int ypos=30;
+    for (int i=0;i&lt;3;++i) {
+        btn[i]=new QPushButton(btn_str[i],browser_tab);
+        btn[i]-&gt;setGeometry(10,ypos,100,40);
+        ypos+=50;
+    }
+    //connect(tab,SIGNAL(currentchanged(int)),
+
+}
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="basicwidget/QTabWidget.png"/>
+   <br/>
+   <strong>
+    22、QToolBar和QAction
+   </strong>
+   <br/>
+   //Qt::ToolButtonIconOnly        值0  只显示图标
+   <br/>
+   //Qt::ToolButtonTextOnly        值1  只显示按钮名称
+   <br/>
+   //Qt::ToolButtonTextBesideIcon  值2  在文本内显示图标
+   <br/>
+   //Qt::ToolButtonTextUnderIcon   值3  在文本下方显示图标
+  </p>
+  <pre><code>#include &lt;QToolBar&gt;
+#include &lt;QAction&gt;
+private slots:
+    void triggerToolbar();
+</code></pre>
+  <pre><code>#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+    //QToolBar  QAction
+    QToolBar *toolbar=new QToolBar(this);
+    toolbar-&gt;setFixedSize(500,30);
+    QAction *act[2];
+
+    act[0]=new QAction(QIcon("basicwidget/browser.png"),"Browser",this);
+    act[1]=new QAction(QIcon("basicwidget/user.png"),"User",this);
+
+    act[0]-&gt;setShortcut(Qt::Key_Control|Qt::Key_E);
+    act[0]-&gt;setToolTip("this is a tooltip");
+
+    for (int i=0;i&lt;2;++i) {
+        toolbar-&gt;addAction((act[i]));
+    }
+
+    toolbar-&gt;setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    connect(act[0],SIGNAL(triggered()),this,
+            SLOT(triggerToolbar()));
+}
+void MainWindow::triggerToolbar()
+{
+    qDebug()&lt;&lt;"tool button 1 click";
+}
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="basicwidget/QToolBar.png"/>
+   <br/>
+   <strong>
+    23、QWidget
+   </strong>
+   <br/>
+   成员函数：
+   <br/>
+   void QWidget::paintEvent(QPaintEvent
+   <em>
+    event)[virtual protected]
+    <br/>
+    void QWidget::resizeEvent(QResizeEvent
+   </em>
+   event)[virtual protected]
+   <br/>
+   mousePressEvent();
+   <br/>
+   mouseReleaseEvent();
+   <br/>
+   moveEvent();
+   <br/>
+   mouseDoubleClickEvent();
+  </p>
+  <p>
+   keyPressEvent()
+   <br/>
+   KeyReleaseEvent()
+   <br/>
+   focusInEvent()
+   <br/>
+   focusOutEvent()
+  </p>
+  <p>
+   <strong>
+    24、QTabBar
+   </strong>
+  </p>
+  <pre><code>#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+    //QTabBar
+    tabbar=new QTabBar(this);
+    tabbar-&gt;setFixedSize(300,200);
+    tabbar-&gt;setGeometry(0,50,400,400);
+    tabbar-&gt;addTab("Browser");
+    tabbar-&gt;addTab("User");
+    tabbar-&gt;addTab("Application");
+
+    connect(tabbar,SIGNAL(currentChanged(int)),this,
+            SLOT(currentTab(int)));
+}
+void MainWindow::currentTab(int value)
+{
+    qDebug()&lt;&lt;"current value is:"&lt;&lt;value;
+}
+</code></pre>
+  <p>
+   <img alt="" src="basicwidget/QTabBar.png"/>
+   <br/>
+   <strong>
+    25、QToolBox
+   </strong>
+  </p>
+  <pre><code>#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui-&gt;setupUi(this);
+    //QToolBox
+    toolbox=new QToolBox(this);
+    toolbox-&gt;setFixedSize(200,200);
+    lay=new QHBoxLayout(this);
+
+    push_btn[0]=new QPushButton("database - 1",this);
+    push_btn[1]=new QPushButton("network - 2",this);
+    push_btn[2]=new QPushButton("graphlics - 3",this);
+    toolbox-&gt;addItem(push_btn[0],"database");
+    toolbox-&gt;addItem(push_btn[1],"network");
+    toolbox-&gt;addItem(push_btn[2],"graphlics");
+
+    lay-&gt;addWidget(toolbox);
+    setLayout(lay);
+
+
+    connect(toolbox,SIGNAL(currentChanged(int)),this,
+            SLOT(changedTabBox(int)));
+
+}
+void MainWindow::changedTabBox(int value)
+{
+    qDebug()&lt;&lt;value;
+}
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="basicwidget/QToolBox.png"/>
+   <br/>
+   <strong>
+    26、QToolButton
+   </strong>
+  </p>
+  <pre><code>//QToolButton
+QToolBar *tool=new QToolBar(this);
+
+QToolButton *button=new QToolButton;
+button-&gt;setIcon(QIcon("basicwidget/browser.png"));
+
+QToolButton *button_1=new QToolButton;
+button_1-&gt;setIcon(QIcon("basicwidget/user.png"));
+
+tool-&gt;addWidget(button);
+tool-&gt;addWidget(button_1);
+tool-&gt;addSeparator();
+</code></pre>
+  <p>
+   <img alt="" src="basicwidget/QToolButton.png"/>
+  </p>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+  </script>
+  <script>
+   hljs.initHighlightingOnLoad();
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
+  </script>
+ </body>
+</html>

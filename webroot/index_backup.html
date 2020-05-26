@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>主页-代码的乐趣</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="分享it技术，积累it技术" />
+<meta name="keywords" content="代码的乐趣, givemefive, 嵌入式, it" />
+<meta name="author" content="givemefive.top" />
+<!--clock-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/zzsc.css">
+<script src="js/jquery-1.4.2.min.js" type="text/javascript"></script>
+<script src="js/cufon-yui.js" type="text/javascript"></script>
+<script src="js/cufon-replace.js" type="text/javascript"></script>
+<script src="js/AvantGarde_Bk_BT_400.font.js" type="text/javascript"></script>
+<script src="js/Myriad_Pro_300.font.js" type="text/javascript"></script>
+<script src="js/jcarousellite.js" type="text/javascript"></script>
+
+<!--弹窗-->
+<!--script>
+function welcome(){
+window.alert("欢迎进入");
+}
+</script-->
+<!--弹窗测试2script src="jquery-1.8.3.js" type="text/javascript"></script>
+<script src="notice_pop.js" type="text/javascript"></script-->
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+<style type="text/css">
+#winpop { width:350px; height:220px; position:absolute; right:5px; bottom:5px; border:1px solid #999999; margin:0; padding:1px; overflow:hidden; display:none; background:#FFFFFF;}
+#winpop .title { width:100%; height:40px; line-height:40px; background:#4F94CD; font-weight:bold; text-align:center; font-size:12px;}
+#winpop .con { width:100%; height:140px; font-weight:bold; font-size:12px; color:#FF0000; text-align:left;margin-left: 5px;margin-top: 5px;}
+#close { position:absolute; right:6px; top:-1px; color:#FFFFFF; cursor:pointer}
+</style>
+<script type="text/javascript">
+			function ShowCountDown(jztime,divname) {
+    		var now = new Date();
+    		var endDate = new Date(Date.parse(jztime.replace(/-/g, "/")));
+    		var leftTime=endDate.getTime()-now.getTime();
+    		var leftsecond = parseInt(leftTime/1000);
+    		var day1=Math.floor(leftsecond/(60*60*24));
+    		var hour=Math.floor((leftsecond-day1*24*60*60)/3600);
+    		var minute=Math.floor((leftsecond-day1*24*60*60-hour*3600)/60);
+    		var second=Math.floor(leftsecond-day1*24*60*60-hour*3600-minute*60);
+    		if(day1 < 10){day1 = "0"+day1;}
+    		if(hour < 10){hour = "0"+hour;}
+    		if(minute < 10){minute = "0"+minute;}
+    		if(second < 10){second = "0"+second;}
+    		var cc = document.getElementById(divname);
+    		cc.innerHTML = "距离"+engTime+"剩余：<em class='wxmr4'>"+day1+"</em>天<em class='wxml4'>"+hour+"</em>：<em>"+minute+"</em>：<em>"+second+"</em>";
+		}
+		var engTime = "2020-5-1";
+		window.setInterval(function(){ShowCountDown(engTime,'time_b');}, 1000);
+</script>
+<script type="text/javascript">
+$(function($) {
+	//弹出提示
+	$("#winpop").slideDown(1000);
+	//隐藏提示
+	$("#close").click(function(){
+		$("#winpop").slideUp(1000);
+	});
+});
+
+</script>
+</head>
+<body id="page1"><!-- onload="welcome();"-->
+<div class="tail-top-left"></div>
+<div class="tail-top">
+<!-- header -->
+	<div id="header">
+		<div class="row-1">
+			<div class="fleft"><a href="index.html"><img src="images/logo.png" alt="" /></a></div>
+			<div class="fright">
+				<ul>
+					<li><a href="index.html" class="active">主页</a></li>
+					<li><a href="about.html">关于</a></li>
+					<li><a href="articles.html">文章</a></li>
+					<li><a href="question.html">问题</a></li>
+					<li><a href="other.html">其他</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="row-2"><span><b><img src="images/blackboard.png" alt="" /></b> <a href="#"><img src="images/button.gif" alt="" /></a></span></div>
+	</div>
+<!-- content -->
+	<div id="content"><div class="ic"></div>
+		<div class="row-1">
+			<div class="inside">
+				<div class="container">
+					<div class="aside">
+						<h3>专题</h3>
+						<ul>
+							<li>
+								<img src="images/pic1.gif" alt="" /><div class="extra-wrap"><span>c/c++语言</span>掌握语言的精髓，熟练每一个不起眼的语法<a href="#">...</a></div>
+							</li>
+							<li>
+								<img src="images/pic2.gif" alt="" /><div class="extra-wrap"><span>linux</span>精通系统的每一个模块，分析源码，感受代码的力量<a href="#">...</a></div>
+							</li>
+							<li>
+								<img src="images/pic3.gif" alt="" /><div class="extra-wrap"><span>数据结构和算法</span>代码的骨架和灵魂，从点滴积累<a href="#">...</a></div>
+							</li>
+							<li>
+								<img src="images/pic4.gif" alt="" /><div class="extra-wrap"><span>ARM9</span>搭建智能家居、智能网关<a href="#">...</a></div>
+							</li>
+							<li>
+								<img src="images/pic5.gif" alt="" /><div class="extra-wrap"><span>QT</span>分享使用语法、IDE使用技巧<a href="#">...</a></div>
+							</li>
+							<li>
+								<img src="images/pic5.gif" alt="" /><div class="extra-wrap"><span>数据库</span>分享各种神奇的数据库<a href="#">...</a></div>
+							</li>
+						</ul>
+					</div>
+					<div class="content">
+						<h3>#include&lt;<font color="red";>代码的乐趣!</font>&gt;</h3>
+						<p class="txt1">std::cout&lt;&lt;&quot;<font color="#518d08;">欢迎!</font>&quot;&lt;&lt;&quot;<font color="#518d08;">hello world!&quot;</font>;</p><p>阅读使人充实，会谈使人敏捷，写作使人精确。<br>——培根</p>
+						<div class="img-box1 alt"><img src="images/1page-img.jpg" alt="" />要掌握书，莫被书掌握；要为生而读，莫为读而生。
+							<br>——布尔沃<br>
+						<b class="txt2">业精于勤，荒于嬉；行成于思，毁于随。<br>——韩愈
+										</b></div>
+						<p>网站有几个部分: <a href="index.html">主页</a>, <a href="about-us.html">关于</a>, <a href="articles.html">文章</a>, <a href="contact-us.html">问题</a>,<a href="sitemap.html">其他</a>.</p>
+						<font color="red"face="verdana"size="4">&quot;千里寻他千百度，蓦然回首，那人却在灯火阑珊处。&quot;</font>
+						<div class="wrapper"><a href="#" class="link1"><em><b>:-)</b></em></a></div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- footer -->
+	<div id="footer">
+		<div class="footer">Copyright - givemefive.top<br />
+		</div>
+	</div>
+</div>
+<script type="text/javascript"> Cufon.now(); </script>
+
+<div id="winpop">
+	<div class="title">网站公告<span id="close" style="margin-right: 3px">X</span></div>
+	<!--div class="con">专注于代码成长，致力于创造，青春无悔，携手共进。<br>
+					<p style="width: 100%;height: 35px;display: block;line-height: 20px;text-align: center;color: green;">
+					《登飞来峰》<br>
+					  王安石<br>
+			飞来山上千寻塔，闻说鸡鸣见日升。<br>
+			不畏浮云遮望眼，自缘身在最高层。<br>
+			</p></div>
+					<div><font>
+						绝世武功，登峰造极，天下无敌。
+					</font></div-->
+	<form><!--action="about.html"-->
+			<script type="text/javascript">
+			function check(){
+				window.alert("登录成功1");
+				var name = $('input[name="currentNumber"]').val();
+				if (name=="999") {
+					window.alert("登录成功2");
+					window.location.href='http://www.baidu.com';
+				}
+				else{
+					window.alert("登录失败");
+				}
+			}
+		</script>
+		<p style="width: 100%;height: 35px;display: block;line-height: 20px;text-align: center;color: green;">网站维护中...</p>
+		申请访问: <input type="text" name="currentNumber" value=输入维护码 onchange="check()"><br>
+		<button type="button" onclick="check()">登陆</button>   
+
+	</form>
+
+	<p>点击"提交"按钮，强行申请访问。</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Made with Remarkable!
+  </title>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <style type="text/css">
+   body,table tr{background-color:#fff}table tr td,table tr th{border:1px solid #ccc;text-align:left;padding:6px 13px;margin:0}pre code,table,table tr{padding:0}hr,pre code{background:0 0}body{font:16px Helvetica,Arial,sans-serif;line-height:1.4;color:#333;word-wrap:break-word;padding:10px 15px}strong,table tr th{font-weight:700}h1{font-size:2em;margin:.67em 0;text-align:center}h2{font-size:1.75em}h3{font-size:1.5em}h4{font-size:1.25em}h1,h2,h3,h4,h5,h6{font-weight:700;position:relative;margin-top:15px;margin-bottom:15px;line-height:1.1}h1,h2{border-bottom:1px solid #eee}hr{height:0;margin:15px 0;overflow:hidden;border:0;border-bottom:1px solid #ddd}a{color:#4183C4}a.absent{color:#c00}ol,ul{padding-left:15px;margin-left:5px}ol{list-style-type:lower-roman}table tr{border-top:1px solid #ccc;margin:0}table tr:nth-child(2n){background-color:#aaa}table tr td :first-child,table tr th :first-child{margin-top:0}table tr td:last-child,table tr th :last-child{margin-bottom:0}img{max-width:100%}blockquote{padding:0 15px;border-left:4px solid #ccc}code,tt{margin:0 2px;padding:0 5px;white-space:nowrap;border:1px solid #eaeaea;background-color:#f8f8f8;border-radius:3px}pre code{margin:0;white-space:pre;border:none}.highlight pre,pre{background-color:#f8f8f8;border:1px solid #ccc;font-size:13px;line-height:19px;overflow:auto;padding:6px 10px;border-radius:3px}
+  </style>
+ </head>
+ <body>
+  <h1 id="_1">
+   布局管理器
+  </h1>
+  <pre><code>//头文件
+#include &lt;QMainWindow&gt;
+#include &lt;QHBoxLayout&gt;
+#include &lt;QVBoxLayout&gt;
+#include &lt;QPushButton&gt;
+#include &lt;QSlider&gt;
+#include &lt;QSpinBox&gt;
+
+//QHBoxLayout
+QWidget *widget=new QWidget(this);
+this-&gt;setCentralWidget(widget);
+QHBoxLayout *hbox_layout=new QHBoxLayout(this);
+QPushButton *btn[6];
+QString btn_str_h[6]={"hello","nice","to","see","you","ahhh"};
+for (int i=0;i&lt;6;++i) {
+    btn[i]=new QPushButton(btn_str_h[i]);
+    hbox_layout-&gt;addWidget(btn[i]);
+}
+
+//QGridLayout
+QGridLayout *grid_layout=new QGridLayout(this);
+QPushButton *gbtn[5];
+QString btn_str_grid[6]={"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
+
+for (int i=0;i&lt;5;++i) {
+    gbtn[i]=new QPushButton(btn_str_grid[i]);
+}
+grid_layout-&gt;addWidget(gbtn[0],0,0);
+grid_layout-&gt;addWidget(gbtn[1],0,1);
+grid_layout-&gt;addWidget(gbtn[2],1,0,1,2);
+grid_layout-&gt;addWidget(gbtn[3],2,0);
+grid_layout-&gt;addWidget(gbtn[4],2,1);
+
+QVBoxLayout *default_layout=new QVBoxLayout(this);
+default_layout-&gt;addLayout(hbox_layout);
+default_layout-&gt;addLayout(grid_layout);
+centralWidget()-&gt;setLayout(default_layout);
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="QtAdvancedWidget/QHBoxLayout.png"/>
+  </p>
+  <h1 id="qt">
+   Qt高级控件
+  </h1>
+  <h5 id="1qcolumnview-modelview">
+   1、QColumnView              基于模型（Model）/视图（View）的列表视图控件
+  </h5>
+  <pre><code>//QColumnView
+QStandardItemModel *model=new QStandardItemModel;
+QStandardItem *name=new QStandardItem("Name");
+QStandardItem *first_name=new QStandardItem("first name");
+QStandardItem *last_name=new QStandardItem("last name");
+
+name-&gt;appendRow(first_name);
+name-&gt;appendRow(last_name);
+model-&gt;appendRow(name);
+
+QStandardItem *john=new QStandardItem("john");
+QStandardItem *smith=new QStandardItem("smith");
+
+first_name-&gt;appendRow(john);
+last_name-&gt;appendRow(smith);
+
+QStandardItem *address=new QStandardItem("adress");
+QStandardItem *street=new QStandardItem("street");
+QStandardItem *state=new QStandardItem("state");
+QStandardItem *city=new QStandardItem("city");
+QStandardItem *country=new QStandardItem("country");
+
+address-&gt;appendRow(street);
+address-&gt;appendRow(city);
+address-&gt;appendRow(state);
+address-&gt;appendRow(country);
+model-&gt;appendRow(address);
+
+QColumnView *columnview=new QColumnView;
+columnview-&gt;setModel(model);
+this-&gt;setCentralWidget(columnview);
+</code></pre>
+  <p>
+   运行结果：
+   <br/>
+   <img alt="" src="QtAdvancedWidget/QColumnView.png"/>
+  </p>
+  <h5 id="2qdatawidgetmapper-mapping">
+   2、QDataWidgetMapper        连接控件和模型数据的映射（Mapping）类控件
+  </h5>
+  <pre><code>//QDataWidgetMapper
+//定义文本字符串
+QStringList items;
+items&lt;&lt;tr("主页")&lt;&lt;tr("工作")&lt;&lt;tr("其他");
+//QStringListModel *type_model=new QStringListModel(items,this);
+QStringList names;
+names&lt;&lt;"小明"&lt;&lt;"小白"&lt;&lt;"小菜"&lt;&lt;"小红"&lt;&lt;"小丽";
+QStringList address;
+address&lt;&lt;"&lt;qt&gt;北京大街1号&lt;br/&gt;北京客栈&lt;/qt&gt;"
+       &lt;&lt;"&lt;qt&gt;上海大街2号&lt;br/&gt;摩天轮游乐园"
+         "&lt;br/&gt;旋转木马&lt;/qt&gt;"
+       &lt;&lt;"&lt;qt&gt;广州大街3号&lt;br/&gt;大排档烧卖&lt;/qt&gt;"
+       &lt;&lt;"&lt;qt&gt;深圳大街4号&lt;br/&gt;无人机广场&lt;/qt&gt;"
+       &lt;&lt;"&lt;qt&gt;香港大街5号&lt;br/&gt;明日之星&lt;br/&gt;梁朝伟别墅&lt;/qt&gt;";
+QStringList types;
+types&lt;&lt;"0"&lt;&lt;"1"&lt;&lt;"2"&lt;&lt;"0"&lt;&lt;"2";
+//创建模型
+QStandardItemModel *model=new QStandardItemModel(5,3,this);//创建5行3列的模型
+//创建控件
+name_edit=new QLineEdit(this);
+name_edit-&gt;setGeometry(0,20,300,20);
+address_edit=new QTextEdit(this);
+address_edit-&gt;setGeometry(0,50,300,170);
+type_combobox=new QComboBox(this);
+type_combobox-&gt;setGeometry(0,220,300,20);
+type_combobox-&gt;addItem(items[0]);
+type_combobox-&gt;addItem(items[1]);
+type_combobox-&gt;addItem(items[2]);
+//创建映射
+mapper=new QDataWidgetMapper(this);
+mapper-&gt;setModel(model);
+//把三个控件映射到模型的三列上
+mapper-&gt;addMapping(name_edit,0);
+mapper-&gt;addMapping(address_edit,1);
+mapper-&gt;addMapping(type_combobox,2,"currentIndex");
+//每一列映射5个字符串数据
+QStandardItem *item[5];
+QStandardItem *name_item[5];
+for (int i=0;i&lt;5;++i) {
+    item[i]=new QStandardItem(names[i]);
+    model-&gt;setItem(i,0,item[i]);//添加到model的第0列
+
+    name_item[i]=new QStandardItem(address[i]);
+    model-&gt;setItem(i,1,name_item[i]);//添加到model的第1列
+}
+
+previous_button=new QPushButton(this);
+previous_button-&gt;setText("上一步");
+previous_button-&gt;setGeometry(300,20,85,30);
+
+next_button=new QPushButton(this);
+next_button-&gt;setText("下一步");
+next_button-&gt;setGeometry(300,60,85,30);
+
+connect(previous_button,SIGNAL(clicked()),
+        mapper,SLOT(toPrevious()));
+connect(next_button,SIGNAL(clicked()),
+        mapper,SLOT(toNext()));
+connect(mapper,SIGNAL(currentIndexChanged(int)),
+        this,SLOT(updateButtons(int)));
+connect(type_combobox,SIGNAL(currentIndexChanged(int)),
+        mapper,SLOT(setCurrentIndex(int)));
+}
+void MainWindow::updateButtons(int value){
+     qDebug()&lt;&lt;"updateButton,value is :"&lt;&lt;value;
+}
+</code></pre>
+  <p>
+   运行结果：
+  </p>
+  <p>
+   <img alt="" src="QtAdvancedWidget/QDataWidgetMapper.png"/>
+   <br/>
+   QListView               列表形态的视图控件
+  </p>
+  <p>
+   QTableView              基于模型/视图的表格视图控件
+   <br/>
+   QTreeView               基于模型/视图的树形视图控件
+   <br/>
+   QDesktopWidget          用一个显卡访问多个虚拟的桌面画面的控件
+   <br/>
+   QUndoView               将撤销栈（undo stack）的内容显示并输出到列表空间的控件
+   <br/>
+   QCalendarWidget         以日历形式显示用户选择的日期（以月为单位）的控件
+  </p>
+  <pre><code>//QCalendarWidget
+QCalendarWidget *calendar=new QCalendarWidget(this);
+calendar-&gt;setGridVisible(true);
+calendar-&gt;setGeometry(0,0,400,400);
+calendar-&gt;setMinimumDate(QDate(2020,3,1));
+calendar-&gt;setMaximumDate(QDate(2020,4,1));
+</code></pre>
+  <p>
+   <img alt="" src="QtAdvancedWidget/QCalendarWidget.png"/>
+   <br/>
+   QMacCocoaViewContainer  打包（Wrapping）Cocoa视图类的Moc OS X的控件
+   <br/>
+   QMacNativeWidget        提供根据Qt构成方式，将Qt控件添加到Cocoa各级结构方法的控件
+  </p>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+  </script>
+  <script>
+   hljs.initHighlightingOnLoad();
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
+  </script>
+ </body>
+</html>

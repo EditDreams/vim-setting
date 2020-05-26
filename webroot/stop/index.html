@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>givemefive</title>
+
+<style>
+@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700);
+body {
+  overflow: hidden;
+  background: #191747;
+}
+
+svg {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+#canvas {
+  -webkit-filter: url("#goo");
+  filter: url("#goo");
+}
+
+h1 {
+  color: #fff;
+  text-align: center;
+  font-family: Quicksand;
+  letter-spacing: 10px;
+  font-size: 20px;
+  text-transform: uppercase;
+  position: fixed;
+  top: 100px;
+  right: 0;
+  left: 0;
+}
+</style>
+</head>
+<body>
+
+<h1>网站使命结束了(2020-04-11)，暂停访问中...</h1>
+<span style="color: red;">回归平静的内心世界，不理繁杂世事，简单到只有一意孤行，勿扰。</span>
+
+<canvas id="canvas"></canvas>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <filter id="goo">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />
+    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 60 -9">
+  </filter>
+  
+</svg>
+
+
+<script>
+window.onload = function(){
+  
+  var canvas = document.getElementById("canvas"),
+      ctx = canvas.getContext("2d");
+  
+  var w = canvas.width = window.innerWidth * 2;
+  var h = canvas.height = window.innerHeight * 2;
+
+  var numParticles = 50,
+      particles = [],
+      radius = 12,
+      speed = 0.1;
+
+  function randomize(min, max) {
+    return Math.round(Math.random() * (max - min) + min);
+  };
+
+  var pos = {
+    x: w/2,
+    y: h/2
+  };
+
+  var colors = ["#e67e22", "#e74c3c", "blue"];
+
+  // clone object pos
+  var accel = JSON.parse(JSON.stringify(pos));
+
+  document.body.addEventListener("mousemove", function(e){
+    pos.x = e.clientX;
+    pos.y = e.clientY;
+  });
+
+  for(var i = 0; i < numParticles; i++){
+    particles.push(new generate());
+  };
+
+  function generate(){
+    this.x = pos.x;
+    this.y = pos.y;
+    this.radius = randomize(3,6);
+    this.color = colors[Math.floor(Math.random() * colors.length)];
+    this.vx = randomize(-2, 2);
+    this.vy = randomize(5, 10);
+    this.life = randomize(20, 30);
+  };
+
+  render();
+
+  function render(){
+    ctx.clearRect(0, 0, w, h);
+
+    accel.x += (pos.x - accel.x) * 0.15;
+    accel.y += (pos.y - accel.y) * 0.15;
+
+    ctx.beginPath();
+    ctx.fillStyle = "#f1c40f";
+    ctx.arc(accel.x, accel.y, radius, 0, Math.PI * 2, false);
+    ctx.fill();
+    ctx.globalCompositeOperation = "xor";
+
+    for(var j = 0; j < particles.length; j++){
+      var p = particles[j];
+
+      ctx.beginPath();
+      ctx.fillStyle = p.color;
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2, false);
+      ctx.fill();
+
+      p.x += p.vx;
+      p.y -= p.vy;
+
+      p.radius -= 0.075;
+      p.life--;
+
+      if(p.life < 0 || p.radius < 0){
+        particles[j] = new generate();
+      }
+
+    }
+
+    requestAnimationFrame(render);
+  }
+
+  // credit
+  balapaCop("Elastic Fire", "rgba(255,255,255,.5)");
+  
+}
+</script>
+
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+<p>适用浏览器：360、FireFox、Chrome、Opera、傲游、搜狗、世界之窗. 不支持Safari、IE8及以下浏览器。</p>
+<p>来源：<a href="http://www.aspku.com/" target="_blank">站长素材</a></p>
+</div>
+</body>
+</html>

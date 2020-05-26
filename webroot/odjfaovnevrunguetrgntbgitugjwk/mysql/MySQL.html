@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MySQL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<h1>必须要知道的知识：</h1>
+<p>1、<strong>关系与关系实例：</strong>一个关系实例对应一张由行和列组成的二维表。  </p>
+<p>2、<strong>元组：</strong>二维表格中的一行。</p>
+<p>3、<strong>属性：</strong>二维表格中的一列。</p>
+<p>4、<strong>域：</strong>属性的取值范围。</p>
+<p>5、<strong>候选码</strong>
+能唯一标识关系中元组的一个属性或属性值。</p>
+<p>6、<strong>主码</strong>
+如果一个关系中有多个候选码，可以从中选择一个作为查询、插入或删除元组的操作变量，被选用的候选码称为主码。</p>
+<p>7、<strong>主属性</strong>
+包含在主码中的各个属性。</p>
+<p>8、<strong>非主属性</strong>
+不包含在任何候选码中的属性。</p>
+<p>9、<strong>外码</strong>
+如果关系R2的一个或一组属性X不是R2的主码，而是另一关系的R1的主码，则该属性或属性组X称为关系R2的外码。
+R2为参照关系，R1为被参照关系。</p>
+<p>10、<strong>关系的完整性</strong>
+实体完整性：主码的值不能为空或部分为空。</p>
+<p>参照完整性：如果关系R2的外码X与关系R1的主码相符，则X的每一个值或者等于R1中竹马的某一值或者 空值。</p>
+<p>用户自定义完整性</p>
+<p>11、<strong>专门的关系运算</strong>
+选取:根据一定的条件从关系R中选择若干个元组，组成一个新的关系。</p>
+<p>投影：关系R上的投影是从R中选择出若干属性列，组成新的关系，即对关系在垂直方向进行的运算，从左到右按照指定的若干属性及顺序选出相应列，删去重复元组。</p>
+<p>连接：从两个关系的笛卡儿积中选取妈祖连接条件的元组组成新的关系。<br />
+一、</p>
+<pre><code>MySQL环境安装：官网下载  
+1、  什么是数据库？  
+答：按照数据结构来组织、存放和管理数据的仓库。  
+2、  有哪些常用数据库？  
+答：Oracle（甲骨文）、DB2（IBM）、  
+SQL（微软）、mysql oracle（甲骨文）小型数据库、  
+Access（微软）桌面型、SQLite桌面型  
+3、  什么是关系型数据库和非关系型数据库？  
+答：  
+4、  关系型数据库数据模型有哪些？  
+答：层级数据模型（树）、网状数据模型（有向图）。  
+5、  SQL语言特点？  
+答：SQL（structed query language）结构化查询语言  
+DQL（data query language）：数据查询语言——用来查询  
+DML（data manipulation language）：数据操作语言——插入insert into 更新update set 删   除delete from
+DDL（data defenition language）：数据定义语言——创建create、删除drop、修改modify仓库中的各种对象 数据库 表 图  索引  
+DCL(data control language)：数据控制语言——提交 回滚  
+MySql最大支持5000万条记录  
+  32位表文件最大支持4GB  
+  64位表文件最大支持8TB  
+6、  什么是表？什么是记录？  
+答：表：存放数据的二维表格  
+记录（元祖）：表中的一行  
+字段（属性）：表中的一列  
+7、  什么是存储引擎？  
+答：MYISAM(老)、INNODB、  
+8、4个默认的数据库？  
+答：information_schema：信息数据库，保存着关于mysql服务器维护的其他数据库信息，比如数据库名，数据库中的表，表的数据类型和访问权限。  
+mysql：保存用户信息，权限的设置，关键字。  
+performance_schema：收集数据库服务器的性能参数。  
+sys：保存数据库服务器的系统数据。  
+9、  常见命令？  
+show databases;  
+use 数据库名字；  
+show tables;  
+show columns from 数据表；（查看表的结构）  
+des 数据表；  
+update mysql.user set anthentication_string=password(‘123123’);  
+flush privileges;（刷新权限）  
+10、图形化管理工具？  
+workbench。  
+
+
+Class02
+1、  什么是数据库设计？  
+答：需求设计。采用从上到下的方式。  
+概念设计。联系类型：1：1、1：n、m：n。E-R图。  
+逻辑设计。将模型转换成特定的DBMS支持的数据模型。 
+
+第一范式1NF：原子性。  
+第二范式2NF：1NF基础上，所有非主属性必须完全依赖主属性。  
+第三范式3NF：2NF基础上，所有非主属性不能依赖其他非主属性。  
+巴斯科德范式BCNF：3NF基础上，非主属性不能依赖于主属性子集。  
+第四范式4NF：3NF基础上，表中不不能包含一个实体的两个或多个相互独立
+                的多值因子。  
+第五范式5NF:在4NF基础上，表必须可以分为较小的表，除非那些表在逻辑上
+                拥有原表相同的主键。  
+物理设计。将逻辑结构实施到具体环境，依赖于给定的DBMS和硬件系统。  
+数据库的实施。根据逻辑设计和物理设计的结果，建立数据库系统，加载数据，测试，          试运行。  
+数据库的运行和维护。改善数据库性能，维护数据库的安全和完整性。  
+
+Class03  
+1、(DDL语言)创建数据库,拉丁文不支持中文  
+create database if not exists数据库名;  
+2、  创建数据库，默认字符集utf8  
+create database if not exists 数据库名 default charset utf8;  
+3、  删除数据库？  
+Drop database 数据库名;  
+4、  创建表？  
+
+create table 表名   
+{
+    stu_no int,             #属性名1 数据类型1 约束1（可省略），
+    stu_name varchar(64),   #属性名2 数据类型2 约束2（可省略）
+    stu_age int  #属性名3  数据类型3 约束3（可省略）
+}engine Innodb charset=utf8;
+5、  数据类型？  
+数值类型。  
+tinyint   1字节  
+smallint  2字节  
+mediumint   3字节  
+int  integer  4字节  
+bigint   8字节  
+
+float4字节  
+double  8字节  
+字符类型。  
+char1字节   表示定长字符串  
+varchar  2字节  表示变长字符串  
+tinyblob  表示二进制字符串  
+tinytext   表示文本  
+blob  
+text  
+mediumblob  
+mediumtext  
+longblob  
+longtext  
+时间和日期类型。  
+date   YYYY-MM-DD  
+time   HH:MM:SS  
+datetime   YYYY-MM-DD HH:MM:SS  
+6、  删除表？  
+drop table 表名;  
+7、  查询表结构？  
+desc 表名;  
+show columns from 表名；  
+8、  增加表的列？  
+alter table 表名 add brithdday varchar(255);  
+9、  删除表的列？  
+alter table 表名 drop column brithday date;  
+10、修改表的列？
+   alter table 表名 modify column brithday date;   #把brithday 数据的类型修改成date  
+11、（DML语言）插入数据
+insert into 表名（stu_age,stu_name）values(18,’抹布’);   #单引号和双引号一样  
+insert into 表名 values(101,’mabu’,18); #严格按顺序，不能省略  
+insert into 表名 values(102,’mabu’,19),(103,’mabu’,20);#插入多条数据  
+12、更新数据  
+update student set stu_no = 6,stu_name = ‘mabu’;  
+update student set stu_no = 6,stu_name = ‘mabu’ where brithday =2019;  
+13、删除全部数据  
+delete from student;   
+14、条件删除数据  
+delete from student where stu_no=4;  
+delete from student where stu_no=2 or stu_no=3;  
+delete from student where stu_no=2 || stu_no=3;  
+15、（DQL语言）查询表的所有  
+select * from student；  
+</code></pre>
+
+<p><strong>四、 数据完整性</strong></p>
+<pre><code>1、  数据完整性有哪些类型？  
+实体完整性：标识符或者主键的完整性（主键约束，唯一值约束）  
+域完整性：限制类型，格式，可能值范围（检查约束，默认值约束，外键约束）  
+引用完整性：保持原表和引用表数据的一致性（外键约束）  
+自定义完整性：用户自定义规则  
+2、  约束类型？  
+行级约束（非空约束、唯一约束、主键约束）、表级约束（外键约束、联合约束）
+</code></pre>
+
+<p><strong>3、非空约束</strong>  </p>
+<pre><code>create table student1  
+{  
+    id int not null,#非空约束  
+    name varchar(64),  
+    phone varchar(20),  
+    class_no int  
+}engine InnoDB default charset utf8;  
+insert into student1(id) values(1)  
+   #添加非空（修改一列）  
+   alter table student1 modify column phone varchar(20) not null;  
+   #删除非空  
+   alter table student1 modify column phone varchar(20)；  
+</code></pre>
+
+<p><strong>4、唯一约束</strong> </p>
+<pre><code>create table student1  
+{  
+    id int not null unique,#唯一约束  
+    name varchar(64),  
+    phone varchar(20),  
+    class_no int  
+}engine InnoDB default charset utf8; 
+
+   #添加约束（修改多列）  
+   alter table student1 add constraint uc_name unique(name);  
+
+   #删除约束  
+   alter table student1 drop index uc_name;  
+</code></pre>
+
+<p><strong>5、创建复合唯一约束</strong></p>
+<pre><code>create table student1  
+{  
+    id int not null ，  
+    name varchar(64),  
+    phone varchar(20),  
+    class_no int，  
+   constraint uc_idphone unique(id,phone)#id和phone不能同时相同  
+}engine InnoDB default charset utf8;  
+</code></pre>
+
+<p><strong>6、主键约束=非空约束+唯一约束</strong> </p>
+<pre><code>create table student1  
+{  
+    id int not null ，  
+    name varchar(64),  
+    phone varchar(20),  
+    class_no int not null，  
+   constraint pk_s6 primary key(id,name)  
+}engine InnoDB default charset utf8;  
+
+   添加主键  
+   alter table student add constraint pk_s primary key(stu_no); 
+
+   删除主键  
+   alter table student drop primary key;  
+
+   自增列 
+create table student1  
+{  
+    id int primary key auto_increment, #自增列 主键给null，从1增 
+    name varchar(64),  
+    phone varchar(20),  
+    class_no int not null，  
+   constraint pk_s6 primary key(id,name)  #联合主键取别名pk_s6
+}engine InnoDB default charset utf8; 
+
+   insert into student1 values(null,’名字’,’123’,101);  
+   （自增列默认从1开始，再插入一条数据默认从2开始）  
+
+   增加自增列  
+   alter table student1 modify column id int primary key auto_increment; 
+
+   删除自增列  
+   alter table student1 modify column id int not null;  
+</code></pre>
+
+<p><strong>7、检查约束</strong><br />
+检查值的范围  </p>
+<pre><code>create table student1  
+{  
+    id int primary key auto_increment,  
+    name varchar(64),  
+    phone varchar(20), 
+    age int check(age&gt;0 and age&lt;200), #检查约束(mysql不支持check约束，需要在表外部判断)
+    gender varchar(4) check(gender ='男' or gender='女'),
+    class_no int not null，  
+   constraint pk_s6 primary key(id,name)  #联合主键取别名pk_s6
+}engine InnoDB default charset utf8; 
+</code></pre>
+
+<p><strong>8、外键约束</strong></p>
+<pre><code>create table class
+(
+    class_no int primary key,
+    class_name varchar(100) not null
+)engine InnoDB default charset utf8;
+
+create table student11
+(
+    student_no int primary key,
+    student_name varchar(100) not null,
+    age int not null default 18,
+    class_id int not null,
+    constraint fk_stuclass
+    foreign key(class_id)
+    references class(class_no)
+)engine InnoDB default charset utf8;
+desc student11;
+# 删除外键
+alter table student11 drop foreign key fk_stuclass;
+# 添加外键
+alter table student11 add constraint fk_stuclass foreign key(class_id) references class(class_no);
+
+insert into class values(1001, '数据库');
+insert into student11
+values(1, '小海', 18, 1001);
+
+# 级联删除 / 更新
+# cascade
+# 参考表数据更新 / 删除  子表对应数据更新 / 删除
+
+create table student12
+(
+    student_no int primary key,
+    student_name varchar(100) not null,
+    class_id int not null,
+    constraint fk_stuclass1
+    foreign key(class_id)
+    references class1(class_no)
+    on delete cascade on update cascade
+)engine InnoDB default charset utf8;
+
+insert into class1 values(1001, '数据库');
+insert into class1 values(1003, 'C++');
+
+insert into student12
+values(1, '小海', 1001);
+
+update class1 set class_no = 1002;
+
+insert into student12
+values(2, '无名', 1003);
+delete from class1 where class_no = 1003;
+
+# No action  默认
+# 若子表中有匹配记录，不允许更新 / 删除父表数据
+
+#set null
+#父表数据更新 / 删除 子表中对应数据变为NULL, 子表外键不能设置非空
+create table class2
+(
+    class_no int primary key,
+    class_name varchar(100) not null
+)engine InnoDB default charset utf8;
+
+create table student13
+(
+    student_no int primary key,
+    student_name varchar(100) not null,
+    class_id int,
+    constraint fk_stuclass2
+    foreign key(class_id)
+    references class2(class_no)
+    on delete set null on update set null
+)engine InnoDB default charset utf8;
+
+
+insert into class2 values(1001, '数据库');
+insert into student13
+values(1, '无名', 1001);
+
+update class2 set class_no = 1002;
+
+insert into class2 values(1003, 'C++');
+insert into student13
+values(2, '无名', 1003);
+
+delete from class2 where class_no = 1003;
+
+
+# on delete 级联操作 on update 级联操作
+</code></pre>
+
+<p><strong>9、默认约束</strong><br />
+不给它值的时候使用默认值  </p>
+<pre><code>create table student1  
+{  
+    id int primary key auto_increment,  
+    name varchar(64),  
+    subject varchar(20) default 'c++'
+}engine InnoDB default charset utf8; 
+
+#添加默认值
+alter table student1 modify column subject varchar(20) default 'c';
+</code></pre>
+
+<p>五、 <br />
+1、单表查询<br />
+2、	</p>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

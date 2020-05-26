@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="Author" content="huangdatian">
+	<meta name="Description" content="the sky of history">
+	<title>代码的乐趣</title>
+	<link rel="stylesheet" type="text/css" href="./style.css">
+	<script src="style.js" type="text/javascript"></script>
+	<style type="text/css">s
+		aside#leftside{
+			padding-right: : 50px;
+			width: 82%;
+			padding-bottom: 10px;
+		}
+	</style>
+	<script>
+function startTime(){
+	var today=new Date();
+	var year=today.getFullYear();
+	var mon=today.getMonth()+1;
+	var day=today.getDate();
+	var d=today.getDay();
+	var h=today.getHours();
+	var m=today.getMinutes();
+	var s=today.getSeconds();// 在小于10的数字钱前加一个‘0’
+	m=checkTime(m);
+	s=checkTime(s);
+	var x;
+	switch (d)
+    {
+  		case 0:x="星期日";
+    	break;
+ 		case 1:x="星期一";
+        break;
+  		case 2:x="星期二";
+        break;
+        case 3:x="星期三";
+   	 	break;
+  		case 4:x="星期四";
+    	break;
+  		case 5:x="星期五";
+        break;
+  		case 6:x="星期六";
+    	break;
+ 	}
+	document.getElementById('today').innerHTML=year+"年\r"+mon+"月\r"+day+"日\r"+x+"\r"+h+":"+m+":"+s;
+	t=setTimeout(function(){startTime()},1000);
+}
+function checkTime(i){
+	if (i<10){
+		i="0" + i;
+	}
+	return i;
+}
+</script>
+<style type="text/css">
+        .text {
+        	margin-left: 100px;
+        	margin-top: 210px;
+            width: 300px;
+            font-size: 28px;
+            z-index: 5;
+            color: white;
+            /*淡入当前文本颜色的背景渐变*/
+            background-image: linear-gradient(transparent 10%, currentColor 30%, currentColor 70%, transparent 90%);
+            /*剪切到文本,把渐变从背景填充到文字当中*/
+            -webkit-background-clip: text;
+            background-clip: text;
+            /*将背景固定在viewport上 */
+            background-attachment: fixed;
+            /*将文本设置为透明，以便通过显示淡入淡出的背景*/
+        }
+
+        .text p {
+            color: transparent;
+        }
+    </style>
+</head>
+<body onload="startTime()">
+	<div style="height: 100%;width: 100%;overflow: auto;">
+		<div style="height: 20%;width: 100%;">
+			<!--标题栏-->
+			<div style="width: 40%;height: 100%; float: left;font-size: 30px;margin-top: 0;margin-left: 1%;">
+				<!--p id="today"></p-->
+				<b id="time_b"></b><br>
+				<span>花有重开日，人无再少年</span><br>
+				<p>这是<span style="color: yellow;font-size: 50px;">年轻</span>的世界！</p>
+				<p>一段岁月，一段沧桑，</p>
+				<p>《知否》送你：</p>
+			</div>
+			<div style="float:right;width: 50%;height: 100%;">
+				<img src="logo.png" width="80%" height="100%">
+				<img src="linux.png" width="80px" height="100px" onclick="out()"/>
+			</div>
+		</div>
+		<div style="height: 1200px;width: 100%;">
+			<div class="text">
+				<h3>知否  -林江</h3>
+				<audio src="zhifou.ogg" controls="controls" autoplay="autoplay"></audio>
+				<p>你的眼里有星河闪烁<br>
+				   值得半生蹉跎<br>
+				   旅人又穿街过河<br>
+				   细雨纷飞的春末<br>
+				   你的背影慢慢经过我<br>
+				   留下许多如果<br>
+				   也许你早就看破<br>
+				   总有些事不能说<br>
+				   知否<br>
+				   林间的绿肥和红瘦<br>
+				   夏天悄悄吹过的风<br>
+				   吹过浮生万众<br>
+				   把你带进我的梦<br>
+				   知否<br>
+				   他说昨夜雨疏风骤<br>
+				   飘进了谁家的小楼<br>
+				   浓睡不消残酒<br>
+				   醒后又知相思愁<br>
+				   留念经不起流年经过<br>
+				   等下一个春末<br>
+				   路人又匆匆走过<br>
+				   书里写下的日落<br>
+				   时间会带走他的懵懂<br>
+				   留下一腔孤勇<br>
+				   喜欢总是藏不住<br>
+				   林深时也会见鹿<br>
+				   知否<br>
+				   林间的绿肥和红瘦<br>
+				   夏天悄悄吹过的风<br>
+				   吹过浮生万众<br>
+				   把你带进我的梦<br>
+				   知否<br>
+				   林间的绿肥和红瘦<br>
+				   夏天悄悄吹过的风<br>
+				   吹过浮生万众<br>
+				   把你带进我的梦<br>
+				   知否<br>
+				   他说昨夜雨疏风骤<br>
+				   飘进了谁家的小楼<br>
+				   浓睡不消残酒<br>
+				   醒后又知相思愁<br>
+				   醒后又知相思<br>
+				   </p><br>
+				   <br>
+				   <br>
+				   <br>
+				   <br>
+				   <br>
+				   <br>
+				   <br>
+				   <br>
+				   <br>
+				   <br>
+				   
+			</div>
+			<div style="height: 100%;width: 400px;padding-left: 170px;margin-top: 210px;">
+				<!--右侧-->
+				<h3>
+					<ruby>
+						导航栏<rt>dao hang lan</rt>
+					</ruby>
+				</h3>
+				<aside id="leftside">
+					<nav>
+						<ol>
+							<li><img src=""><a href="#">吾生有崖</a></li>
+							<li><a href="https://tool.oschina.net/hexconvert">进制转换</a></li>
+							<li><a href="https://tool.oschina.net/commons?type=4/">程序员工具大全</a></li>
+						</ol>
+					</nav>
+				</aside>
+				<h3>
+					<ruby>
+						镜像源<rt>jing xiang yuan</rt>
+					</ruby>
+				</h3>
+				<aside id="leftside">
+					<nav>
+						<ol>
+							<li><a href="http://download.qt.io/archive/qt/">qt镜像</a></li>
+							<li><a href="https://mirrors.tuna.tsinghua.edu.cn/">清华大学镜像</a></li>
+							<li><a href="http://tools.android-studio.org/">android 下载</a></li>
+							<li><a href="https://www.oracle.com/java/technologies/javase-downloads.html">jdk下载</a></li>
+						</ol>
+					</nav>
+				</aside>
+				<h3>
+					<ruby>
+						书籍<rt>shu ji</rt>
+					</ruby>
+				</h3>
+				<aside id="leftside">
+					<nav>
+						<ol>
+							<li><a href="https://codingpy.com/books/thinkpython2/index.html">《Think Python 2e》</a></li>
+							<li><a href="https://en.cppreference.com/w/">《cppreference》</a></li>
+							<li><a href="http://www.learncpp.com">《learncpp》</a></li>
+							<li><a href="http://www.cplusplus.com">《cplusplus》</a></li>
+							<li><a href="https://www.tutorialspoint.com/cplusplus/index.htm">《tutorialspoint-cplusplus》</a></li>
+							<li><a href="https://github.com/fffaraz/awesome-cpp">《awesome-cpp》</a></li>
+							<li><a href="https://www.w3cschool.cn/javascript/">《JavaScript》</a></li>
+							<li><a href="https://www.w3cschool.cn/jsref/">《JavaScript 和 HTML DOM 参考手册》</a></li>
+						</ol>
+					</nav>
+				</aside>
+				<h3>
+					<ruby>
+						动手解决一些小问题<rt>dong shou jie jue yi xie xiao wen ti</rt>
+					</ruby>
+				</h3>
+				<aside id="leftside">
+					<nav>
+						<ol>
+							<li><a href="fcitx-qt5.html">Linux 下 Qt 5 无法切换中文输入法</a></li>
+							<li><a href="https://www.jianshu.com/p/9a7d736126d1">完美解决Dia无法输入中文的问题</a></li>
+						</ol>
+					</nav>
+				</aside>
+				<div style="height: 50px;width: 100%;">
+					<!--低栏-->
+					<div>
+						Copyright&copy;givemefive.top
+					</div>
+				</div>	
+				<div>
+					<p>可以快，何必要慢？</p>
+					<p>我，喜欢独自一个人，</p>
+					<p>在黑夜里前行，</p>
+					<p>不甘一世卑微，更害怕默默老去，</p>
+					<p>早已不再去傻傻期待别人，</p>
+					<p>有很多很多的想法和愿望，</p>
+					<p>让时间静止，世界只有我一个人</p>
+					<p>在屏幕前行云流水。</p>
+				</div>	
+			</div>
+		</div>						
+	</div>
+</body>
+</html>

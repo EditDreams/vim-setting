@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>linux网络编程</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<h1>linux网络编程</h1>
+<h3>OSI七层</h3>
+<p><strong>-应用层</strong><br />
+与其它计算机进行通讯的一个应用，它是对应应用程序的通信服务的。例如，一个没有通信功能的字处理程序就不能执行通信的代码，从事字处理工作的程序员也不关心OSI的第7层。但是，如果添加了一个传输文件的选项，那么字处理器的程序就需要实现OSI的第7层。示例：TELNET，HTTP，FTP，NFS，SMTP等。 </p>
+<blockquote>
+<p>文件传输，电子邮件，文件服务，虚拟终端 TFTP，HTTP，SNMP，FTP，SMTP，DNS，Telnet</p>
+</blockquote>
+<p><strong>-表示层</strong>  <br />
+这一层的主要功能是定义数据格式及加密。例如，FTP允许你选择以二进制或ASCII格式传输。如果选择二进制，那么发送方和接收方不改变文件的内容。如果选择ASCII格式，发送方将把文本从发送方的字符集转换成标准的ASCII后发送数据。在接收方将标准的ASCII转换成接收方计算机的字符集。示例：加密，ASCII等。</p>
+<blockquote>
+<p>数据格式化，代码转换，数据加密 没有协议  
+</p>
+</blockquote>
+<p><strong>-会话层</strong> <br />
+它定义了如何开始、控制和结束一个会话，包括对多个双向消息的控制和管理，以便在只完成连续消息的一部分时可以通知应用，从而使表示层看到的数据是连续的，在某些情况下，如果表示层收到了所有的数据，则用数据代表表示层。示例：RPC，SQL等。  </p>
+<blockquote>
+<p>解除或建立与别的接点的联系 没有协议</p>
+</blockquote>
+<p><strong>-传输层</strong><br />
+这层的功能包括是否选择差错恢复协议还是无差错恢复协议，及在同一主机上对不同应用的数据流的输入进行复用，还包括对收到的顺序不对的数据包的重新排序功能。示例：TCP，UDP，SPX。 </p>
+<blockquote>
+<p>提供端对端的接口 TCP，UDP<br />
+设备：四层交换机、也有工作在四层的路由器。</p>
+</blockquote>
+<p><strong>-网络层</strong><br />
+这层对端到端的包传输进行定义，它定义了能够标识所有结点的逻辑地址，还定义了路由实现的方式和学习的方式。为了适应最大传输单元长度小于包长度的传输介质，网络层还定义了如何将一个包分解成更小的包的分段方法。示例：IP，IPX等。  </p>
+<blockquote>
+<p>为数据包选择路由 IP，ICMP，RIP，OSPF，BGP，IGMP<br />
+设备：路由器、三层交换机。</p>
+</blockquote>
+<p><strong>数据链路层</strong><br />
+它定义了在单个链路上如何传输数据。这些协议与被讨论的各种介质有关。示例：ATM，FDDI等。</p>
+<blockquote>
+<p>传输有地址的帧以及错误检测功能 SLIP，CSLIP，PPP，ARP，RARP，MTU<br />
+设备：网桥（现在少用）、以太网交换机（二层交换机），网卡（一半工作在数据链路层，一半工作在物理层）。</p>
+</blockquote>
+<p><strong>-物理层</strong><br />
+OSI的物理层规范是有关传输介质的特性，这些规范通常也参考了其他组织制定的标准。连接头、帧、帧的使用、电流、编码及光调制等都属于各种物理层规范中的内容。物理层常用多个规范完成对所有细节的定义。示例：Rj45，802.3等。  </p>
+<blockquote>
+<p>以二进制数据形式在物理媒体上传输数据 ISO2110，IEEE802，IEEE802.2<br />
+设备：中继器、集线器还有我们常说的双绞线也工作在物理层。</p>
+</blockquote>
+<h3>TCP/IP协议族的每一层的作用：</h3>
+<p><strong>·网络接口层：</strong>负责将二进制流转换为数据帧，并进行数据帧的发送和接收。要注意的是数据帧是独立的网络信息传输单元。</p>
+<p><strong>·网络层：</strong>负责将数据帧封装成IP数据报，并运行必要的路由算法。</p>
+<p><strong>·传输层：</strong>负责端对端之间的通信会话连接和建立。传输协议的选择根据数据传输方式而定。</p>
+<p><strong>·应用层：</strong>负责应用程序的网络访问，这里通过端口号来识别各个不同的进程。</p>
+<h3>TCP/IP协议族的每一层协议的相关注解：</h3>
+<p><strong>·ARP：</strong>（地址转换协议）用于获得同一物理网络中的硬件主机地址。</p>
+<p><strong>·MPLS：</strong>（多协议标签交换）很有发展前景的下一代网络协议。</p>
+<p><strong>·IP：</strong>（网际互联协议）负责在主机和网络之间寻址和路由数据包。</p>
+<p><strong>·ICMP：</strong>（网络控制消息协议）用于发送报告有关数据包的传送错误的协议。</p>
+<p><strong>·IGMP：</strong>（网络组管理协议）被IP主机用来向本地多路广播路由器报告主机组成员的协议。</p>
+<p><strong>·TCP：</strong>（传输控制协议）为应用程序提供可靠的通信连接。适合于一次传输大批数据的情况。并适用于要求得到相应的应用程序。</p>
+<p><strong>·UDP：</strong>（用户数据包协议）提供了无连接通信，且不对传送包进行可靠的保证。适合于一次传输少量数据。</p>
+<p><strong>数据存储优先顺序的转换</strong><br />
+计算机数据存储有两种字节优先顺序：高位字节优先（称为大端模式）和低位字节优先（称为小端模式）。内存的低地址存储数据的低字节，高地址存储数据的高字节的方式叫小端模式。内存的高地址存储数据的低字节，低地址存储数据高字节的方式称为大端模式。</p>
+<p>eg:对于内存中存放的数0x12345678来说</p>
+<p>如果是采用大端模式存放的，则其真实的数是：0x12345678</p>
+<p>如果是采用小端模式存放的，则其真实的数是：0x78563412</p>
+<p>如果称某个系统所采用的字节序为主机字节序，则它可能是小端模式的，也可能是大端模式的。而端口号和IP地址都是以网络字节序存储的，不是主机字节序，网络字节序都是大端模式。要把主机字节序和网络字节序相互对应起来，需要对这两个字节存储优先顺序进行相互转化。这里用到四个函数：htons(),ntohs(),htonl()和ntohl().这四个地址分别实现网络字节序和主机字节序的转化，这里的h代表host,n代表network，s代表short，l代表long。通常16位的IP端口号用s代表，而IP地址用l来代表。  </p>
+<pre><code>uint32_t htonl(unin32_t host32bitvalue);
+参数是32bit的二进制数值，在转换地址时就是32位的主机字节序ip地址（经常用点分十进制）
+用法：servaddr.sin_addr.s_addr=htonl(127.0.0.1);
+servaddr.sin_addr.s_addr=htonl(INADDR_ANY); // INADDR_ANY真实值为0.0.0.0
+</code></pre>
+
+<p><strong>地址格式转化(127.0.0.1转化为100007f)</strong>  </p>
+<p>Ipv4中用到的函数有<strong>inet_aton()</strong>、<strong>inet_addr()<strong>和</strong>inet_ntoa()</strong> <br />
+该函数完成两个功能：1.字符串-&gt;二进制数值  2.主机字节序-&gt;网络字节序<br />
+<font style="color:red">数值型的ip地址转换用htonl，字符串类型的用inet_pton</font></p>
+<pre><code>int inet_aton(const char *cp, struct in_addr *inp);
+
+char *inet_ntoa(struct in_addr in);
+
+in_addr_t inet_addr(const char *cp);
+
+
+
+#include&lt;stdio.h&gt;
+#include&lt;sys/socket.h&gt;
+#include&lt;netinet/in.h&gt;
+#include&lt;arpa/inet.h&gt;
+int main()
+{
+    char ip[]=&quot;127.0.0.1&quot;;
+    printf(&quot;ip地址:%s\n&quot;,ip);
+
+    struct in_addr myaddr;
+    int iRet=inet_aton(ip,&amp;myaddr);
+    printf(&quot;十进制转为网络字节序二进制(inet_aton)：%x\n&quot;,myaddr.s_addr);
+    printf(&quot;(inet_addr):%x\n&quot;,inet_addr(ip));
+    iRet=inet_pton(AF_INET,ip,&amp;myaddr);
+    printf(&quot;(inet_pton):%x\n&quot;,myaddr.s_addr);
+    return 0;
+}
+</code></pre>
+
+<p>IPV4和Ipv6兼容的函数有<strong>inet_pton()</strong>和<strong>inet_ntop()</strong></p>
+<p><strong>域名ip之间的转化</strong><br />
+利用域名获取IP地址<br />
+https://blog.csdn.net/merry1996/article/details/96050859  </p>
+<pre><code>#include &lt;netdb.h&gt;
+struct hostent* gethostbyname(const char* hostname);
+成功时返回hostent结构体地址，失败时返回NULL指针。
+</code></pre>
+
+<p>hostent结构体定义如下： </p>
+<pre><code>struct hostent
+{
+    char * h_name;       //official name
+    char ** h_aliases;   //alias list
+    int h_addrtype;      //host address type
+    int h_length;        //address length
+    char ** h_addr_list; //address list
+}
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;arpa/inet.h&gt;
+#include &lt;netdb.h&gt;
+#include &lt;unistd.h&gt;
+
+void error_handling(char *message);
+
+int main(int argc, char* argv[])
+{
+    int i = 0;
+    struct hostent* host;
+    if(argc != 2)
+    {
+        printf(&quot;Usage: %s &lt;addr&gt;\n&quot;, argv[0]);
+        exit(1);
+    }
+
+    host = gethostbyname(argv[1]);
+    if(host == NULL)
+    {
+        error_handling(&quot;gethost...error&quot;);
+    }
+    printf(&quot;Official name: %s\n&quot;, host-&gt;h_name);
+    printf(&quot;address length: %d\n&quot;, host-&gt;h_length);
+
+    for(i = 0; host-&gt;h_aliases[i]; i++)
+    {
+        printf(&quot;Aliases %d: %s\n&quot;, i + 1, host-&gt;h_aliases[i]);
+    }
+
+    printf(&quot;Address type: %s\n&quot;, (host-&gt;h_addrtype == AF_INET) ? &quot;AF_INET&quot; : &quot;AF_INET6&quot;);
+
+    for( i = 0; host-&gt;h_addr_list[i]; i++)
+    {
+        printf(&quot;IP addr %d: %s\n&quot;, i + 1, inet_ntoa(*(struct in_addr*)host-&gt;h_addr_list[i]));
+    }
+
+    return 0;
+}
+
+void error_handling(char* message)
+{
+    fputs(message, stderr);
+    fputc('\n', stderr);
+    exit(1);
+}
+</code></pre>
+
+<p><strong>TCP通信的基本步骤如下：</strong></p>
+<p>服务端：socket---bind---listen---while(1){---accept---recv---send---close---}---close</p>
+<pre><code>socket(AF_INET, SOCK_STREAM, 0);
+
+struct sockaddr_in server_addr;
+bzero(&amp;server_addr,sizeof(struct sockaddr_in));
+//绑定端口和ip
+server_addr.sin_family = AF_INET;
+server_addr.sin_port = htons(PORT);
+server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+//server_addr.sin_addr.s_addr = inet_addr(IP);
+
+int sfp;
+bind(sfp,(struct sockaddr *)(&amp;s_add), sizeof(struct sockaddr));
+
+listen(sfp,5)
+
+struct sockaddr_in c_add;
+int sin_size = sizeof(struct sockaddr_in);
+accept(sfp, (struct sockaddr *)(&amp;c_add), &amp;sin_size);
+
+recv();
+
+send(nfp, buffer, strlen(buffer), 0);
+
+close(nfp);
+</code></pre>
+
+<p>客户端：socket----------------------------------connect---send---recv-----------------close  </p>
+<pre><code>int cfd;
+connect(cfd,(struct sockaddr *)(&amp;s_add), sizeof(struct sockaddr))
+</code></pre>
+
+<p><strong>UDP通信流程图如下：</strong></p>
+<p>服务端：socket---bind---recvfrom---sendto---close</p>
+<p>客户端：socket----------sendto---recvfrom---close</p>
+<p><strong>单播、广播、组播（多播）</strong></p>
+<p>UDP广播通信</p>
+<p>UDP组播通信</p>
+<p>IP层协议?<br />
+ARP映射表?</p>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
